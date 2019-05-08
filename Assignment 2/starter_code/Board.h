@@ -4,9 +4,9 @@
 
 class Board {
   private:
-    
-  public:
 
+  public:
+    
 }
 
 

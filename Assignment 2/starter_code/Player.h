@@ -15,8 +15,9 @@ class Player {
     Player();
     int getPoints();
     int setPoints(int);
-    int getHand();
-    void showHand();
+    int getHandSize();
+    void listHand();
+
 }
 
 

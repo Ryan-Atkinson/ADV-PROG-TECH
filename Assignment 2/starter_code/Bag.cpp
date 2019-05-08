@@ -1,10 +1,10 @@
-
 #include "Bag.h"
+#include <iostream>
 
 Bag::Bag() {
 
 }
 
-Bag::~Bag() {
-  
+int Bag::size() {
+  return size();
 }
