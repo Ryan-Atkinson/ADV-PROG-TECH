@@ -4,8 +4,8 @@
 Bag::Bag() {
   this->size=0;
 
-  Colour colours = {RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE};
-  Shape shapes = {CIRCLE, STAR_4, DIAMOND, SQUARE, STAR_6, CLOVER };
+  Colour colours [6] = {RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE};
+  Shape shapes [6] = {CIRCLE, STAR_4, DIAMOND, SQUARE, STAR_6, CLOVER };
 
   for(Colour colour: colours){
     for(Shape shape: shapes){

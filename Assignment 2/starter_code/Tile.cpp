@@ -1,9 +1,11 @@
 
 #include "Tile.h"
 
-// Empty... for now?
 
 
-Title::Tile(Colour colour, Shape shape ): colour(colour), shape(shape){
+
+Tile::Tile(Colour colour, Shape shape ): colour(colour), shape(shape){
 
 }
+
+Tile::Tile(Tile& copy): colour(copy.colour), shape(copy.shape){}
