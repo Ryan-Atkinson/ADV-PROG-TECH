@@ -36,31 +36,30 @@ void menu(void){
   std::cout <<"4. Quit" << std::endl;
   std::cin >> input;
 
-  //switch statement
-  switch(input){
-    case '1' :
+  if(input=='1'){
     std::cout << "Creating A New Game" << std::endl;
     gameInProgress = true;
     newGame();
-    break;
-    case '2' :
+  } else if (input=='2'){
     std::cout << "Loading The Game." << std::endl;
     gameInProgress = true;
     loadGame();
-    break;
-    case '3' :
+
+  } else if (input=='3'){
     std::cout << "Show Student Information." << std::endl;
     showInfo();
-    break;
-    case '4' :
+
+  } else if (input=='4') {
+
     std::cout << "Quiting the menu" << std::endl;
     quit();
-    break;
-    default :
+
+  } else{
     std::cout << "Error Invalid Selection." <<std::endl;
     std::cout << "Please choose again." <<std::endl;
     std::cin >> input;
-    break;
+
+  }
 
 }
 
@@ -82,7 +81,7 @@ void newGame(void){
 void loadGame(void){
   //LOADS THE GAME FROM HERE FOR ALL PLAYERS
 
-  
+
 }
 
 void showInfo(void){
