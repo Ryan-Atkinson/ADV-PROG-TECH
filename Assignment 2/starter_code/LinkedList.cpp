@@ -13,7 +13,7 @@ LinkedList::~LinkedList() {
 int LinkedList::size()
 {
   //assign counter to 0
-  it counter =0;
+  int counter =0;
   //create node and point to the head which points to nullptr
   Node* node = head;
   //a while loop to check if note is not equal to nullptr
@@ -49,16 +49,17 @@ void LinkedList::clear()
 
 int LinkedList::get(int i)
 {
-  //create a node pointing to the head
-  Node* node = this->head;
-  //a for loop to iterate through the elements of linkedlist
-  for (int count=1; count <=i; ++count)
-  {
-    //assigns node to the next node
-    node =node->next;
-  }
-  //returns the node pointing to the data of the linkedlist in a position i
-  return node->data;
+  // //create a node pointing to the head
+  // Node* node = this->head;
+  // //a for loop to iterate through the elements of linkedlist
+  // for (int count=1; count <=i; ++count)
+  // {
+  //   //assigns node to the next node
+  //   node =node->next;
+  // }
+  // //returns the node pointing to the data of the linkedlist in a position i
+  // return node->tile;
+  return i;
 }
 
 void LinkedList::addFront(Tile* tile){
@@ -106,10 +107,7 @@ void LinkedList::deleteBack()
 {
   Node* newNode = head;
   Node* prevNode = nullptr;
-  if(head==nullptr){
-    cout<<"list empty";
-  }
-  else if(head->next==nullptr)
+    if(head->next==nullptr)
     {
       newNode=head;
       delete(newNode);
@@ -117,7 +115,7 @@ void LinkedList::deleteBack()
     else
     {
       newNode=head;
-      while(newNode->newNode->next!=nullptr)
+      while(newNode->next!=nullptr)
       {
         prevNode = newNode;
         prevNode = newNode->next;

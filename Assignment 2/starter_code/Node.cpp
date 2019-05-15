@@ -7,7 +7,7 @@ Node::Node(Tile* tile, Node* next):
 }
 
 Node::Node(Node& other):
-   data(other.data),
+   tile(other.tile),
    next(other.next)
 {
 }

@@ -1,5 +1,8 @@
 
 #include "LinkedList.h"
+#include "Node.h"
+#include "Tile.h"
+#include "TileCodes.h"
 #include "Board.h"
 #include "Player.h"
 #include "Bag.h"
@@ -9,107 +12,123 @@
 
 #define EXIT_SUCCESS    0
 
-int main(void) {
+using std::cout;
+using std::endl;
+using std::string;
+using std::cin;
+
+bool menu();
+void newGame();
+void loadGame();
+void showInfo();
+int quit();
+bool validateName(const std::string& playerName);
+
+
+int main() {
    LinkedList* list = new LinkedList();
    bool gameInProgress = false;
-   while(gameInProgress = false)
+   while(gameInProgress == false)
    {
-     menu();
+     bool menu();
    }
    delete list;
-   delete gameInProgress;
+   // delete gameInProgress;
 
-   std::cout << "TODO: Implement Qwirkle!" << std::endl;
+   cout << "TODO: Implement Qwirkle!" << endl;
 
    return EXIT_SUCCESS;
 }
 
-void menu(void){
-  int input =0;
+bool menu(){
+  bool gameInProgress;
+  int input;
 
-  std::cout << "Welcome to Qwirkle!" << std::endl;
-  std::cout << "-------------------" << std::endl;
-  std::cout << "Menu" << std::endl;
-  std::cout << "----" << std::endl;
-  std::cout <<"1. New Game" << std::endl;
-  std::cout <<"2. Load Game" << std::endl;
-  std::cout <<"3. Show student information" << std::endl;
-  std::cout <<"4. Quit" << std::endl;
-  std::cin >> input;
+  cout << "Welcome to Qwirkle!" << endl;
+  cout << "-------------------" << endl;
+  cout << "Menu" << endl;
+  cout << "----" << endl;
+  cout <<"1. New Game" << endl;
+  cout <<"2. Load Game" << endl;
+  cout <<"3. Show student information" << endl;
+  cout <<"4. Quit" << endl;
+  cin >> input;
 
-  //switch statement
-  switch(input){
-    case '1' :
-    std::cout << "Creating A New Game" << std::endl;
+//if statement to look for input from user for menu function
+  if(input==1){
+    cout << "Creating A New Game" << endl;
     gameInProgress = true;
     newGame();
-    break;
-    case '2' :
-    std::cout << "Loading The Game." << std::endl;
+  } else if (input==2){
+    cout << "Loading The Game." << endl;
     gameInProgress = true;
     loadGame();
-    break;
-    case '3' :
-    std::cout << "Show Student Information." << std::endl;
+
+  } else if (input==3){
+    std::cout << "Show Student Information." << endl;
     showInfo();
-    break;
-    case '4' :
-    std::cout << "Quiting the menu" << std::endl;
+
+  } else if (input==4) {
+
+    cout << "Quiting the menu" << endl;
     quit();
-    break;
-    default :
-    std::cout << "Error Invalid Selection." <<std::endl;
-    std::cout << "Please choose again." <<std::endl;
-    std::cin >> input;
-    break;
+
+  } else{
+    cout << "Error Invalid Selection." << endl;
+    cout << "Please choose again." << endl;
+    cin >> input;
+
+  }
+  return gameInProgress;
 
 }
 
-void newGame(void){
+void newGame(){
   //generate a new game
-  string playerName;
-  std::cout << "starting a New Game" << std::endl;
-  while()
-  std::cout << "Enter a name for Player 1 (uppercase characters only): " << std::end;
-  std::cin >>playerName;
-  validateName(playerName);
-  std::cout <<"Enter a name for Player 2 (uppercase characters only): " <<std::endl;
-  std::cin >>playerName;
-  validateName(playerName);
-
-  std::cout "Let's Play!" << std::endl;
+  // string playerName;
+  // cout << "starting a New Game" << endl;
+  // // while()
+  // cout << "Enter a name for Player 1 (uppercase characters only): " << endl;
+  // std::cin >>playerName;
+  // validateName(playerName);
+  // cout <<"Enter a name for Player 2 (uppercase characters only): " << endl;
+  // std::cin >>playerName;
+  // validateName(playerName);
+  //
+  // cout << "Let's Play!" << endl;
 }
 
-void loadGame(void){
+void loadGame(){
   //LOADS THE GAME FROM HERE FOR ALL PLAYERS
 }
 
-void showInfo(void){
+void showInfo(){
   //DISPLAYS PLAYER INFORMATION
-  std::cout <<"---------------------------------" << std::endl;
-  std::cout <<"Name: Duc Minh Chau" << std::endl;
-  std::cout <<"Student ID: S3656289" << std::endl;
-  std::cout <<"Email: S3656289@student.rmit.edu.au" << std::endl;
+  cout <<"---------------------------------" << endl;
+  cout <<"Name: Duc Chau" << endl;
+  cout <<"Student ID: S3656289" << endl;
+  cout <<"Email: S3656289@student.rmit.edu.au" << endl;
 
-  std::cout <<"Name: Ryan Atkinson" << std::endl;
-  std::cout <<"Student ID: " << std::endl;
-  std::cout <<"Email: " << std::endl;
+  cout <<"Name: Ryan Atkinson" << endl;
+  cout <<"Student ID: S3646447 " << endl;
+  cout <<"Email: S3646447@student.rmit.edu.au" << endl;
 
-  std::cout <<"Name: Eleni" << std::endl;
-  std::cout <<"Student ID: " << std::endl;
-  std::cout <<"Email: " << std::endl;
+  cout <<"Name: Eleni Cook" << endl;
+  cout <<"Student ID: S3722194" << endl;
+  cout <<"Email: S3722194@student.rmit.edu.au" << endl;
 }
 
-void quit(void){
+int quit(){
   //EXITS THE PROGRAM
   return EXIT_SUCCESS;
 }
 
 bool validateName(const std::string& playerName){
-  for (const char c : playerName){
-    if(!isalpha(c) || !isupper(c)){
-      return false;
-    }
-    return true;
-  }
+  // for (const char c : playerName){
+  //   if(!isalpha(c) || !isupper(c)){
+  //     return false;
+  //   }
+  //
+  // }
+  return true;
 }
