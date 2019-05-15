@@ -39,7 +39,7 @@ void menu(void) {
   std::cin >> input;
 
   // SWITCH FOR SELECTING MENU FUNCTIONS
-  switch(input) {
+  /*switch(input) {
     case '1' :
      std::cout << "New Game selected." << std::endl;
      gameInProgress = true;
@@ -63,7 +63,7 @@ void menu(void) {
      std::cout << "Please choose again." << std::endl;
      std::cin >> input;
      break;
-}
+}*/
 
 void newGame(void) {
   // GENERATES NEW GAME FOR PLAYERS

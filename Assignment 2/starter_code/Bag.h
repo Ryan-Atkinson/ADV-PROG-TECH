@@ -4,9 +4,12 @@
 
 class Bag {
   private:
+    LinkedList<Tile> tiles;
 
   public:
-    
+    Bag();
+    int size();
+    Tile getTile();
 }
 
 

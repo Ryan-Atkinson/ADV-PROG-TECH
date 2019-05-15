@@ -2,21 +2,25 @@
 #ifndef ASSIGN2_PLAYER_H
 #define ASSIGN2_PLAYER_H
 
-#include <LinkedList>
 #include <string>
+#include "LinkedList.h"
 #include "Bag.h"
 
 class Player {
   private:
-    string playerName;
-    int points;
-    LinkedList<char> hand;
+    string name;
+    int score;
+    LinkedList<Tile> hand;
   public:
     Player();
-    int getPoints();
-    int setPoints(int);
-    int getHandSize();
+    int getScore();
+    void setScore(int);
+    void addPoints(int);
+    void subtractPoints(int);
     void listHand();
+    int getHandSize();
+    void fillHand();
+    
 
 }
 
