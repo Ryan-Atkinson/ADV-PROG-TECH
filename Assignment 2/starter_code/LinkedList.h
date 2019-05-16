@@ -12,13 +12,13 @@ public:
   void clear();
   int get(int i);
 
-  void addFront(int data);
-  void addBack(int data);
+  void addFront(Tile data);
+  void addBack(Tile data);
 
   void deleteFront();
   void deleteBack();
 
-  void addAt(int i);
+  void addAt(int i, Tile data);
   void deleteAt(int i);
   LinkedList();
   ~LinkedList();
@@ -27,6 +27,7 @@ public:
 
 private:
   Node* head;
+  int size;
 
 }
 

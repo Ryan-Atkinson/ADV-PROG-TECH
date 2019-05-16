@@ -13,6 +13,7 @@ class Bag {
     void shuffle();
     int size();
     Tile takeTile();
+    void createBag();
 
 
 }
