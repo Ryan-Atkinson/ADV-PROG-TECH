@@ -21,21 +21,20 @@ bool menu();
 void newGame();
 void loadGame();
 void showInfo();
-int quit();
 bool validateName(const std::string& playerName);
 
 
 int main() {
    LinkedList* list = new LinkedList();
    bool gameInProgress = false;
-   while(gameInProgress == false)
+   //while(!gameInProgress)
+   while(!gameInProgress)
    {
-     bool menu();
+     menu();
    }
    delete list;
    // delete gameInProgress;
 
-   cout << "TODO: Implement Qwirkle!" << endl;
 
    return EXIT_SUCCESS;
 }
@@ -46,8 +45,8 @@ bool menu(){
 
   cout << "Welcome to Qwirkle!" << endl;
   cout << "-------------------" << endl;
-  cout << "Menu" << endl;
-  cout << "----" << endl;
+  cout << "  Menu" << endl;
+  cout << "--------------" << endl;
   cout <<"1. New Game" << endl;
   cout <<"2. Load Game" << endl;
   cout <<"3. Show student information" << endl;
@@ -71,7 +70,8 @@ bool menu(){
   } else if (input==4) {
 
     cout << "Quiting the menu" << endl;
-    quit();
+    cout << string( 50, '\n' );
+    exit(0);
 
   } else{
     cout << "Error Invalid Selection." << endl;
@@ -118,10 +118,6 @@ void showInfo(){
   cout <<"Email: S3722194@student.rmit.edu.au" << endl;
 }
 
-int quit(){
-  //EXITS THE PROGRAM
-  return EXIT_SUCCESS;
-}
 
 bool validateName(const std::string& playerName){
   // for (const char c : playerName){
