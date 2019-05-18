@@ -12,7 +12,7 @@
 
 #define EXIT_SUCCESS    0
 
-
+void board();
 bool menuOption();
 void showMenu();
 void newGame();
@@ -24,9 +24,10 @@ bool validateName(const std::string& playerName);
 int main() {
    LinkedList* list = new LinkedList();
    bool gameInProgress = false;
-   //while(!gameInProgress)
+   while(!gameInProgress)
    while(!gameInProgress)
    {
+
      menuOption();
    }
    delete list;
@@ -34,6 +35,50 @@ int main() {
 
 
    return EXIT_SUCCESS;
+}
+
+void board(){
+  const char row = 6;
+  const char col = 6;
+  //2D array to store the lines '|' on the board
+  char boardArr [row][col];
+
+  //The numbers on top of the board
+  std::cout <<"   0  1  2  3  4  5" <<"\n";
+  std::cout <<"  -------------------";
+
+  //print the board
+  for (int i=0;i<row;++i)
+  {
+    //print numbers from 0 to 5 on top of board
+
+    for(int j=0;j<col;++j)
+    {
+      boardArr[i][j] = {'|'};
+    }
+  }
+  //print array as grid
+  for(int i =0;i<row;++i)
+  {
+      std::cout <<"\n";
+
+    for(int j=0;j<col;++j)
+    {
+      if(j==0){
+        //prints the ASCII character from A to F on the side of the board
+        std::cout <<(char)('A'+i)<<" ";
+      }
+        std::cout <<boardArr[i][j];
+        //spaces inbetween the "|" lines
+        std::cout<<"  "; //we can try and use the empty spaces as a way to input the user tiles
+
+    }
+    //Printing the last line at the end of the board on the far right
+    std::cout<<"|";
+  }
+
+  std::cout <<"\n";
+
 }
 
 void showMenu(){
@@ -70,7 +115,7 @@ bool menuOption(){
   } else if (input==4) {
 
     std::cout << "Quiting the menu" << "\n";
-    std::cout << string( 50, '\n' );
+    std::cout << std::string( 50, '\n' );
     exit(0);
 
   } else{
@@ -85,7 +130,7 @@ bool menuOption(){
 
 void newGame(){
   //generate a new game
-  string playerName;
+  std::string playerName;
   std::cout << "Starting a New Game" << "\n";
   // while()
   std::cout << "Enter a name for Player 1 (uppercase characters only): " << "\n";
@@ -109,6 +154,7 @@ void newGame(){
 
 void loadGame(){
   //LOADS THE GAME FROM HERE FOR ALL PLAYERS
+  board();
 }
 
 void showInfo(){
