@@ -20,7 +20,7 @@ class Player {
     void listHand();
     int getHandSize();
     void fillHand();
-    
+
 
 }
 
