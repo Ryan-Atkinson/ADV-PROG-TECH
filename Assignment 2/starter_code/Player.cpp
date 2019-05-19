@@ -6,6 +6,7 @@
 Player::Player(string name) {
   name = name;
   score = 0;
+  
 }
 
 int Player::getScore() {
@@ -13,21 +14,25 @@ int Player::getScore() {
 }
 
 void Player::setScore(int i) {
-  score = i;
+  score=i;
 }
 
 void Player::addPoints(int i) {
-  score += i;
+  score+=i;
 }
 
 void Player::subtractPoints(int i) {
-  score -= i;
+  score-=i;
+}
+
+void Player::getHand() {
+  return hand;
 }
 
 void Player::drawTile(Bag& Bag) {
   if(getHandSize()<5) {
-    Tile i = Bag.getTile();
-    hand.addBack(i);
+    Tile i = this->Bag.getTile();
+    this->hand.addBack(i);
   }
   else {
     return 0;
@@ -35,7 +40,7 @@ void Player::drawTile(Bag& Bag) {
 }
 
 void Player::removeTile() {
-  if(hand.!empty) {
+  if(this->hand.!empty) {
 
   }
 

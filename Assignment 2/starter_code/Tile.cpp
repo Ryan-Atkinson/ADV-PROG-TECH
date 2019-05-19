@@ -2,7 +2,9 @@
 #include "Tile.h"
 #include "TileCodes.h"
 
-Tile::Tile() {
-  colour = colour;
-  shape = shape;
+// Empty... for now?
+Tile::Tile(Colour colour, Shape shape) :
+     colour(colour),
+     shape(shape)
+{
 }

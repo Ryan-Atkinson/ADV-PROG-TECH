@@ -13,7 +13,7 @@ LinkedList::~LinkedList() {
 int LinkedList::size()
 {
   //assign counter to 0
-  it counter =0;
+  int counter =0;
   //create node and point to the head which points to nullptr
   Node* node = head;
   //a while loop to check if note is not equal to nullptr
@@ -54,11 +54,12 @@ int LinkedList::get(int i)
   //a for loop to iterate through the elements of linkedlist
   for (int count=1; count <=i; ++count)
   {
-    //assigns node to the next node
-    node =node->next;
-  }
-  //returns the node pointing to the data of the linkedlist in a position i
-  return node->data;
+  //assigns node to the next node
+     node =node->next;
+   }
+   //returns the node pointing to the data of the linkedlist in a position i
+   return node->tile;
+  return i;
 }
 
 void LinkedList::addFront(Tile* tile){
