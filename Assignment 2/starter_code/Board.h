@@ -6,7 +6,7 @@
 #include "Tile.h"
 class Board {
   public:
-    Board(int rol, int col);
+    Board(const int row, const int col);
     bool move(int row, int col, Tile& piece, Player& player);
 
 

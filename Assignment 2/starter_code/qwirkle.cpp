@@ -8,11 +8,12 @@
 #include "Bag.h"
 
 #include <iostream>
+#include <fstream>
 #include <string>
 
 #define EXIT_SUCCESS    0
 
-void board();
+
 bool menuOption();
 void showMenu();
 void newGame();
@@ -24,11 +25,11 @@ bool validateName(const std::string& playerName);
 int main() {
    LinkedList* list = new LinkedList();
    bool gameInProgress = false;
-   while(!gameInProgress)
-   while(!gameInProgress)
+   if(gameInProgress==false)
    {
-
+     showMenu();
      menuOption();
+
    }
    delete list;
    // delete gameInProgress;
@@ -37,51 +38,10 @@ int main() {
    return EXIT_SUCCESS;
 }
 
-void board(){
-  const char row = 6;
-  const char col = 6;
-  //2D array to store the lines '|' on the board
-  char boardArr [row][col];
 
-  //The numbers on top of the board
-  std::cout <<"   0  1  2  3  4  5" <<"\n";
-  std::cout <<"  -------------------";
-
-  //print the board
-  for (int i=0;i<row;++i)
-  {
-    //print numbers from 0 to 5 on top of board
-
-    for(int j=0;j<col;++j)
-    {
-      boardArr[i][j] = {'|'};
-    }
-  }
-  //print array as grid
-  for(int i =0;i<row;++i)
-  {
-      std::cout <<"\n";
-
-    for(int j=0;j<col;++j)
-    {
-      if(j==0){
-        //prints the ASCII character from A to F on the side of the board
-        std::cout <<(char)('A'+i)<<" ";
-      }
-        std::cout <<boardArr[i][j];
-        //spaces inbetween the "|" lines
-        std::cout<<"  "; //we can try and use the empty spaces as a way to input the user tiles
-
-    }
-    //Printing the last line at the end of the board on the far right
-    std::cout<<"|";
-  }
-
-  std::cout <<"\n";
-
-}
 
 void showMenu(){
+  std::cout<<"\n";
   std::cout << "Welcome to Qwirkle!" << "\n";
   std::cout << "-------------------" << "\n";
   std::cout <<"Menu"<<"\n";
@@ -90,71 +50,103 @@ void showMenu(){
   std::cout <<"2. Load Game" << "\n";
   std::cout <<"3. Show student information" << "\n";
   std::cout <<"4. Quit" << "\n";
+  std::cout<<"\n";
 }
 
 bool menuOption(){
-  showMenu();
+  // showMenu();
   bool gameInProgress;
-  int input;
+  char input;
+
+  std::cout<<"> ";
   std::cin >> input;
+  if(std::cin.eof()){
+    std::cout<<"Goodbye"<<"\n";
+    exit(0);
+  }
+
 
 //if statement to look for input from user for menu function
-  if(input==1){
+  if(input=='1'){
     std::cout << "Creating A New Game" << "\n";
     gameInProgress = true;
     newGame();
-  } else if (input==2){
+
+  } else if (input=='2'){
     std::cout << "Loading The Game." << "\n";
     gameInProgress = true;
     loadGame();
 
-  } else if (input==3){
+  } else if (input=='3'){
     std::cout << "Show Student Information." << "\n";
+    //displays student information and then returns to menu screen
     showInfo();
+    menuOption();
 
-  } else if (input==4) {
-
+  } else if (input=='4'){
     std::cout << "Quiting the menu" << "\n";
+    //clears the screen with 50 end lines and exits the program without crashing
     std::cout << std::string( 50, '\n' );
     exit(0);
 
-  } else{
-    std::cout << "Error Invalid Selection." << "\n";
-    std::cout << "Please choose again." << "\n";
-    std::cin >> input;
-
+  }else{
+    while((input != '1') && (input !='2') &&(input !='3')&&(input!='4'))
+    {
+    std::cout << "Invalid Input"<< "\n";
+    menuOption();
+    std::cout<<"> ";
+    std::cin >>input;
   }
-  return gameInProgress;
+  }
 
+  return gameInProgress;
 }
 
 void newGame(){
   //generate a new game
-  std::string playerName;
+  //player name variables
+  std::string playerName1;
+  std::string playerName2;
   std::cout << "Starting a New Game" << "\n";
-  // while()
   std::cout << "Enter a name for Player 1 (uppercase characters only): " << "\n";
-  std::cin >>playerName;
-  if(validateName(playerName)==false){
+  std::cout<<"> ";
+  //player 1 name input
+  std::cin >>playerName1;
+  //while loop to check for validity to player name (name must be uppercase!)
+  while(validateName(playerName1)==false){
     std::cout <<"Uppercase characters only for playername!" <<"\n";
-    std::cin >>playerName;
-  }else{
+    std::cout<<"> ";
+    std::cin >>playerName1;
+  }
     std::cout << "Enter a name for Player 2 (uppercase characters only): " << "\n";
-    std::cin >>playerName;
-  }
-  if(validateName(playerName)==false){
+    std::cout<<"> ";
+    std::cin >>playerName2;
+  //while loop to check for validity to player name (name must be uppercase!)
+  while(validateName(playerName2)==false){
     std::cout <<"Uppercase characters only for playername!" <<"\n";
-    std::cin >>playerName;
+    std::cout<<"> ";
+    std::cin >>playerName2;
   }
+  if(!std::cin.fail()){
     std::cout << "Let's Play!" << "\n";
     std::cout <<"<normal gameplay continues from here>" <<"\n";
-
+  }
 }
 
 
 void loadGame(){
   //LOADS THE GAME FROM HERE FOR ALL PLAYERS
-  board();
+
+  std::string filename;
+  std::cout <<"Enter a filename: "<<"\n";
+  std::cout <<"> ";
+  std::cin >>filename;
+  //checks if input contains EOF character (^D)
+  if(std::cin.eof()){
+    std::cout<<"Goodbye"<<"\n";
+  }
+
+  // board();
 }
 
 void showInfo(){
@@ -178,6 +170,8 @@ bool validateName(const std::string& playerName){
   for (const char c : playerName){
     if(!isalpha(c) || !isupper(c)){
       return false;
+    }else{
+      return true;
     }
 
   }
