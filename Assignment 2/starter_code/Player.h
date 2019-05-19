@@ -17,9 +17,9 @@ class Player {
     void setScore(int);
     void addPoints(int);
     void subtractPoints(int);
-    void listHand();
+    LinkedList<Tile> getHand();
     int getHandSize();
-    void fillHand();
+    void drawTiles();
 
 
 }

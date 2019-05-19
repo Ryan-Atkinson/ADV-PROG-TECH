@@ -25,7 +25,7 @@ void Player::subtractPoints(int i) {
   score-=i;
 }
 
-void Player::getHand() {
+LinkedList<Tile> Player::getHand() {
   return hand;
 }
 
@@ -33,21 +33,19 @@ int Player::getHandSize() {
   return hand.size();
 }
 
-void Player::drawTile(Bag& Bag) {
-    Tile i = this->Bag.takeTile();
-    this->hand.addBack(i);
-}
-
 void Player::removeTile() {
-  if(this->hand.!empty) {
+  if(hand.!empty) {
 
   }
 
 }
 
-void Player::fullHand() {
-
+void Player::drawTiles(Bag& bag) {
+  while (hand.size()<5 && bag.size()>0) {
+    hand.addBack(bag.takeTile());
+  }
 }
 
 bool Player::hasTile(Tile t) {
+  if ()
 }
