@@ -47,6 +47,7 @@ void Bag::shuffle(){
     std::cout<< "for index "<< i<< std::endl;
     std::cout<<"Index to be shuffled: "<< index<< std::endl;
 
+
     //gets a random tile from the bag
     Tile* tile = this->tiles->get(index);
     std::cout<<"get works "<< index<< std::endl;
@@ -56,9 +57,9 @@ void Bag::shuffle(){
     //then adds the tile at the add of the bag
     this->tiles->addBack(tile);
     std::cout<<"add back works "<< index<< std::endl;
-
+    break;
   }
-  printBag();
+//  printBag();
   std::cout << "shuffled"<< std::endl;
 
 }
@@ -85,6 +86,9 @@ void Bag::createBag(){
       std::cout << "Colour: "<< colour << "Shape: "<< shape<< std::endl;
     }
   }
+
+
+
   std::cout<< "Bag Size: "<< this->bagSize<<std::endl;
 
 }
