@@ -6,7 +6,7 @@
 Player::Player(string name) {
   name = name;
   score = 0;
-  
+
 }
 
 int Player::getScore() {
@@ -29,14 +29,13 @@ void Player::getHand() {
   return hand;
 }
 
+int Player::getHandSize() {
+  return hand.size();
+}
+
 void Player::drawTile(Bag& Bag) {
-  if(getHandSize()<5) {
-    Tile i = this->Bag.getTile();
+    Tile i = this->Bag.takeTile();
     this->hand.addBack(i);
-  }
-  else {
-    return 0;
-  }
 }
 
 void Player::removeTile() {
