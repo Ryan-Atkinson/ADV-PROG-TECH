@@ -30,14 +30,17 @@ int main() {
    bool gameInProgress = false;
    if(gameInProgress==false)
    {
-     // showMenu();
-     // menuOption();
+     showMenu();
+     menuOption();
 
-     bag->shuffle();
+     // bag->shuffle();
+     // bag->printBag();
+     // bag->takeTile();
+     // bag->printBag();
 
    }
    delete list;
-   //delete bag;
+   delete bag;
    // delete gameInProgress;
 
 

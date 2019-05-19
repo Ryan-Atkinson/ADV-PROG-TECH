@@ -25,31 +25,38 @@ void LinkedList::deleteFront()
 
 void LinkedList::deleteAt(int i){
   Node* current=head;
+  Node* previous = nullptr;
   int index=0;
-  while(current!=nullptr && index<i-1){
-    index++;
-    current=current->next;
-  //  std::cout<<" LinkedList index: "<< index<<std::endl;
-  }
-  if(current->next->next == nullptr){
-    Node* deletedNode =current->next;
-    delete deletedNode;
-    std::cout<<" deleted 1 "<< index<<std::endl;
+  if(i==0){
+    head = current->next;
+    delete current;
   } else{
-    Node* tempNode =current->next->next;
-    Node* deletedNode = current->next;
-    delete deletedNode;
-    current->next=nullptr;
+    while(current!=nullptr && index<i){
+      previous=current;
+
+      current=current->next;
+      index++;
+    //  std::cout<<" LinkedList index: "<< index<<std::endl;
+    }
+    if(current->next == nullptr){
+      previous->next=nullptr;
+      delete current;
+      //std::cout<<" deleted 1 "<< index<<std::endl;
+    } else{
+      previous->next=current->next;
 
 
-    std::cout<<" deleted index: "<< index<< " colour: " << deletedNode->tile->colour <<" shape: "<< deletedNode->tile->shape << std::endl;
-    current->next=tempNode;
+      //std::cout<<" deleted 2 index: "<< index<< " colour: " << current->tile->colour <<" shape: "<< current->tile->shape << std::endl;
+      delete current;
+    }
   }
-
-
-
-
 }
+
+
+
+
+
+
 
 void LinkedList::deleteBack()
 {
@@ -103,7 +110,7 @@ void LinkedList::addBack(Tile* tile){
 
       //iterate through linkedlist until next is nullptr
       tempNode=tempNode->next;
-      std::cout<< "tempNode colour: "<< tempNode->tile->colour << " shape: "<< tempNode->tile->shape<< std::endl;
+    //  std::cout<< "tempNode colour: "<< tempNode->tile->colour << " shape: "<< tempNode->tile->shape<< std::endl;
     }
     //assign the temporary node to the next node called newNode
     tempNode->next=newNode;
@@ -113,13 +120,17 @@ void LinkedList::addBack(Tile* tile){
 //gets data at an index
 Tile* LinkedList::get(int i){
 
-  Node* current=head;
   int index=0;
-  while(current->next!=nullptr && index<i){
-    index++;
-    current=current->next;
+  Node* current=head;
+  if(i!=0){
+
+    while(current->next!=nullptr && index<i){
+      index++;
+      current=current->next;
+    }
   }
-  std::cout<<"get at index: "<< index<< " tile: colour "<< current->tile->colour<<" shape: "<<current->tile->shape<<std::endl;
+
+  //std::cout<<"Get at index: "<< index<< " tile: colour "<< current->tile->colour<<" shape: "<<current->tile->shape<<std::endl;
   return current->tile;
 }
 
