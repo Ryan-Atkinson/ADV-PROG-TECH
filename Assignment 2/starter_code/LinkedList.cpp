@@ -8,98 +8,150 @@ LinkedList::LinkedList() {
 }
 
 LinkedList::~LinkedList() {
+  clear();
 }
 
-LinkedList::deleteFront(){
-  if(head !=nullptr){
-    Node* newHead= head.next;
-    delete head;
-    head = newHead;
-
-  }
+void LinkedList::deleteFront()
+{
+  //create node pointing to head
+  Node* toDelete = head;
+  //point head to next element
+  head = head->next;
+  //deletes the node at the front
+  delete toDelete;
 }
 
-LinkedList::deleteAt(int i){
+void LinkedList::deleteAt(int i){
   Node* current=head;
   int index=0;
   while(current!=nullptr && index<i){
     index++;
-    current=current.next;
+    current=current->next;
   }
-  Node* deletedNode =current.next;
-  current.next=deletedNode.next;
+  Node* deletedNode =current->next;
+  current->next=deletedNode->next;
   delete deletedNode;
 
 
 
 }
 
-
-
-
-LinkedList::addFront(Tile data){
-
-  if(head==nullptr){
-    head =new Node(data, nullptr)
-  } else{
-    Node* newNode = new Node(data, head);
-    head=newNode;
+void LinkedList::deleteBack()
+{
+  Node* newNode = head;
+  Node* prevNode = nullptr;
+    if(head->next==nullptr)
+    {
+      newNode=head;
+      delete(newNode);
+    }
+    else
+    {
+      newNode=head;
+      while(newNode->next!=nullptr)
+      {
+        prevNode = newNode;
+        prevNode = newNode->next;
+      }
+      prevNode->next=nullptr;
+      delete(newNode);
   }
 }
 
-LinkedList::addBack(Tile data){
 
-  if(head==nullptr){
-    head = new Node(i, nullptr);
-  } else{
-    Node* current = head;
 
-    while(current!=nullptr){
-      current=current.next;
+
+
+void LinkedList::addFront(Tile* tile){
+  Node* newNode = new Node(tile, this->head);
+  this->head = newNode;
+}
+
+void LinkedList::addBack(Tile* tile){
+  Node* newNode = new Node(tile, this->head);
+  newNode->tile = tile;
+  newNode->next = nullptr;
+
+  //if statement to check if head points to nullptr
+  if(this->head==nullptr)
+  {
+    this->head = newNode;
+  }
+  else
+  {
+    //list not Empty
+    //create temporary node to point to the head
+    Node* tempNode = this->head;
+
+    while(tempNode->next!=nullptr)
+    {
+      //iterate through linkedlist until next is nullptr
+      tempNode=tempNode->next;
     }
-    current.next= new Node(i, nullptr);
+    //assign the temporary node to the next node called newNode
+    tempNode->next=newNode;
   }
 }
 
 //gets data at an index
-LinkedList::get(int i){
+Tile* LinkedList::get(int i){
   Node* current=head;
   int index=0;
   while(current!=nullptr && index<i){
     index++;
-    current=current.next;
+    current=current->next;
   }
 
-  return current.data;
+  return current->tile;
 }
 
 //add a node at an index
-LinkedList::addAt(int i, Tile data){
+void LinkedList::addAt(int i, Tile* data){
   Node* current=head;
   int index=0;
-  while(current!=null && index+1<i){
-    current= current.next;
+  while(current!=nullptr && index+1<i){
+    current= current->next;
     index++;
   }
 
-  Node* newNode = new Node(data, current.next)
-  current.next= newNode;
+  Node* newNode = new Node(data, current->next);
+  current->next= newNode;
 
 }
 
-LinkedList::size(){
-
-  Node* current=head;
-  int index=0;
-  while(current!=nullptr){
-    index++;
-    current=current.next;
+int LinkedList::size()
+{
+  //assign counter to 0
+  int counter =0;
+  //create node and point to the head which points to nullptr
+  Node* node = head;
+  //a while loop to check if note is not equal to nullptr
+  while(node!=nullptr)
+  {
+    //iterating through the nodes with a counter from 0
+    ++counter;
+    //assign node to the next node
+    node = node->next;
   }
-
-  return index;
-
+  //returns counter which is the number of elements in the LinkedList
+  return counter;
 }
 
-LinkedList::clear(){
+void LinkedList::clear()
+{
+  //creating the node and pointing it to the head
+  Node* node = head;
 
+  //a while loop to test if node is not pointing to nullptr
+  while(node!=nullptr)
+  {
+    //save the node pointing to the next
+    Node* saveNode = node->next;
+    //delete the node
+    delete node;
+    //node is equal to saveNode
+    node = saveNode;
+  }
+  //after deleting the node the head will need to point to nullptr
+  head = nullptr;
 }
