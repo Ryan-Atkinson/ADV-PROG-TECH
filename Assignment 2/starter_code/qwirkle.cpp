@@ -1,7 +1,9 @@
-#include "LinkedList.h"
-#include "Node.h"
-#include "Tile.h"
+
+
 #include "TileCodes.h"
+#include "Tile.h"
+#include "Node.h"
+#include "LinkedList.h"
 #include "Board.h"
 #include "Player.h"
 #include "Bag.h"
@@ -9,6 +11,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+
 
 #define EXIT_SUCCESS    0
 
@@ -23,14 +26,18 @@ bool validateName(const std::string& playerName);
 
 int main() {
    LinkedList* list = new LinkedList();
+   Bag* bag = new Bag();
    bool gameInProgress = false;
    if(gameInProgress==false)
    {
      showMenu();
      menuOption();
 
+     //bag->shuffle();
+
    }
    delete list;
+   //delete bag;
    // delete gameInProgress;
 
 

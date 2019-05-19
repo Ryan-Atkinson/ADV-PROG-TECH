@@ -17,6 +17,7 @@ class Bag {
     int size();
     Tile* takeTile();
     void createBag();
+    void printBag();
 
 
 };

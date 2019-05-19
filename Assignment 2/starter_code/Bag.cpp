@@ -1,7 +1,7 @@
 
-
-#include "Bag.h"
 #include "TileCodes.h"
+#include "Bag.h"
+
 
 #include <iostream>
 #include <string>
@@ -64,6 +64,7 @@ void Bag::createBag(){
   Shape shapes [6] = {CIRCLE, STAR_4, DIAMOND, SQUARE, STAR_6, CLOVER };
 
   // a nested foor loop pairs up each shape and colour combination
+  std::cout<<"Tile Bag"<<std::endl;
   for(Colour colour: colours){
     for(Shape shape: shapes){
 
@@ -71,7 +72,20 @@ void Bag::createBag(){
       this->tiles->addBack(new Tile(colour, shape));
       this->tiles->addBack(new Tile(colour, shape));
       this->bagSize+=2;
+      std::cout << "Colour: "<< colour << "Shape: "<< shape<< std::endl;
     }
+  }
+  std::cout<< "Bag Size: "<< this->bagSize<<std::endl;
+
+}
+
+
+
+void Bag::printBag(){
+  int index=0;
+  while(index<this->bagSize){
+    Tile* tile = this->tiles->get(index);
+    std::cout << "Colour: "<< tile->colour<< "Shape: "<< tile->shape<<std::endl;
   }
 
 }
