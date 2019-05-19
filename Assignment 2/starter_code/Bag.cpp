@@ -8,6 +8,7 @@
 #include <random>
 
 Bag::Bag() {
+  this->tiles=new LinkedList();
 
   createBag();
 
@@ -33,24 +34,32 @@ int Bag::size() {
 void Bag::shuffle(){
 
   int min =0;
-  int max = this->bagSize;
+  int max = this->bagSize-1;
   std::random_device engine;
   std::uniform_int_distribution<int> uniform_dist(min, max);
+  std::cout<< "shuffle"<<std::endl;
 
+  //printBag();
   //shuffles the bag for the size of bag times 2, to ensure that the bag is completely shuffled
-  for(int i =0; i<this->bagSize*2; i++) {
+  for(int i =0; i<(this->bagSize*2); i++) {
+
     int index=uniform_dist(engine);
+    std::cout<< "for index "<< i<< std::endl;
+    std::cout<<"Index to be shuffled: "<< index<< std::endl;
 
     //gets a random tile from the bag
     Tile* tile = this->tiles->get(index);
-
+    std::cout<<"get works "<< index<< std::endl;
     //deletes the tile from the bag
     this->tiles->deleteAt(index);
-
+    std::cout<<"delete at works "<< index<< std::endl;
     //then adds the tile at the add of the bag
     this->tiles->addBack(tile);
-  }
+    std::cout<<"add back works "<< index<< std::endl;
 
+  }
+  printBag();
+  std::cout << "shuffled"<< std::endl;
 
 }
 
@@ -67,6 +76,7 @@ void Bag::createBag(){
   std::cout<<"Tile Bag"<<std::endl;
   for(Colour colour: colours){
     for(Shape shape: shapes){
+      std::cout<<"s"<< std::endl;
 
       //each tile exists twice in the Bag
       this->tiles->addBack(new Tile(colour, shape));
@@ -85,7 +95,9 @@ void Bag::printBag(){
   int index=0;
   while(index<this->bagSize){
     Tile* tile = this->tiles->get(index);
-    std::cout << "Colour: "<< tile->colour<< "Shape: "<< tile->shape<<std::endl;
+    std::cout << "Colour: "<< tile->colour<< " Shape: "<< tile->shape<<" Index: " << index<<std::endl;
+    index++;
   }
+
 
 }

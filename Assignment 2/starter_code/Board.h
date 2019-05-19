@@ -1,19 +1,15 @@
-#ifndef ASSIGN2_BAG_H
-#define ASSIGN2_BAG_H
+#ifndef ASSIGN2_BOARD_H
+#define ASSIGN2_BOARD_H
 
-class Bag {
+class Board {
   private:
-    // LinkedList* tiles;
-    // int size;
+
 
   public:
-    // Bag();
-    // void shuffle();
-    // int size();
-    // Tile takeTile();
+
 
 };
 
 
 
-#endif // ASSIGN2_BAG_H
+#endif // ASSIGN2_BOARD_H

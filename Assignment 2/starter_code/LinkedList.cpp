@@ -1,9 +1,10 @@
 
 #include "LinkedList.h"
+#include <iostream>
 
 LinkedList::LinkedList() {
    head = nullptr;
-   
+
 
    // TODO
 }
@@ -25,13 +26,22 @@ void LinkedList::deleteFront()
 void LinkedList::deleteAt(int i){
   Node* current=head;
   int index=0;
-  while(current!=nullptr && index<i){
+  while(current!=nullptr && index<i-1){
     index++;
     current=current->next;
+  //  std::cout<<" LinkedList index: "<< index<<std::endl;
   }
-  Node* deletedNode =current->next;
-  current->next=deletedNode->next;
-  delete deletedNode;
+  if(current->next->next == nullptr){
+    Node* deletedNode =current->next;
+    delete deletedNode;
+    std::cout<<" deleted 1 "<< index<<std::endl;
+  } else{
+    Node* deletedNode =current->next;
+    current->next=deletedNode->next;
+    delete deletedNode;
+    std::cout<<" deleted 2 "<< index<<std::endl;
+  }
+
 
 
 
@@ -66,12 +76,12 @@ void LinkedList::deleteBack()
 void LinkedList::addFront(Tile* tile){
   Node* newNode = new Node(tile, this->head);
   this->head = newNode;
+
 }
 
 void LinkedList::addBack(Tile* tile){
-  Node* newNode = new Node(tile, this->head);
-  newNode->tile = tile;
-  newNode->next = nullptr;
+  Node* newNode = new Node(tile, nullptr);
+
 
   //if statement to check if head points to nullptr
   if(this->head==nullptr)
@@ -98,7 +108,7 @@ void LinkedList::addBack(Tile* tile){
 Tile* LinkedList::get(int i){
   Node* current=head;
   int index=0;
-  while(current!=nullptr && index<i){
+  while(current->next!=nullptr && index<i){
     index++;
     current=current->next;
   }
