@@ -1,10 +1,11 @@
 
 #include "Tile.h"
-#include "TileCodes.h"
 
-// Empty... for now?
-Tile::Tile(Colour colour, Shape shape) :
-     colour(colour),
-     shape(shape)
-{
+
+
+
+Tile::Tile(Colour colour, Shape shape ): colour(colour), shape(shape){
+
 }
+
+Tile::Tile(Tile& copy): colour(copy.colour), shape(copy.shape){}

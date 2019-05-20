@@ -1,13 +1,151 @@
 
 #include "LinkedList.h"
+#include <iostream>
 
 LinkedList::LinkedList() {
    head = nullptr;
+
 
    // TODO
 }
 
 LinkedList::~LinkedList() {
+  clear();
+}
+
+void LinkedList::deleteFront()
+{
+  //create node pointing to head
+  Node* toDelete = head;
+  //point head to next element
+  head = head->next;
+  //deletes the node at the front
+  delete toDelete;
+}
+
+void LinkedList::deleteAt(int i){
+  Node* current=head;
+  Node* previous = nullptr;
+  int index=0;
+  if(i==0){
+    head = current->next;
+    delete current;
+  } else{
+    while(current!=nullptr && index<i){
+      previous=current;
+
+      current=current->next;
+      index++;
+    //  std::cout<<" LinkedList index: "<< index<<std::endl;
+    }
+    if(current->next == nullptr){
+      previous->next=nullptr;
+      delete current;
+      //std::cout<<" deleted 1 "<< index<<std::endl;
+    } else{
+      previous->next=current->next;
+
+
+      //std::cout<<" deleted 2 index: "<< index<< " colour: " << current->tile->colour <<" shape: "<< current->tile->shape << std::endl;
+      delete current;
+    }
+  }
+}
+
+
+
+
+
+
+
+void LinkedList::deleteBack()
+{
+  Node* newNode = head;
+  Node* prevNode = nullptr;
+    if(head->next==nullptr)
+    {
+      newNode=head;
+      delete(newNode);
+    }
+    else
+    {
+      newNode=head;
+      while(newNode->next!=nullptr)
+      {
+        prevNode = newNode;
+        prevNode = newNode->next;
+      }
+      prevNode->next=nullptr;
+      delete(newNode);
+  }
+}
+
+
+
+
+
+void LinkedList::addFront(Tile* tile){
+  Node* newNode = new Node(tile, this->head);
+  this->head = newNode;
+
+}
+
+void LinkedList::addBack(Tile* tile){
+  Node* newNode = new Node(tile, nullptr);
+
+
+  //if statement to check if head points to nullptr
+  if(this->head==nullptr)
+  {
+    this->head = newNode;
+  }
+  else
+  {
+    //list not Empty
+    //create temporary node to point to the head
+    Node* tempNode = this->head;
+
+    while(tempNode->next!=nullptr)
+    {
+
+      //iterate through linkedlist until next is nullptr
+      tempNode=tempNode->next;
+    //  std::cout<< "tempNode colour: "<< tempNode->tile->colour << " shape: "<< tempNode->tile->shape<< std::endl;
+    }
+    //assign the temporary node to the next node called newNode
+    tempNode->next=newNode;
+  }
+}
+
+//gets data at an index
+Tile* LinkedList::get(int i){
+
+  int index=0;
+  Node* current=head;
+  if(i!=0){
+
+    while(current->next!=nullptr && index<i){
+      index++;
+      current=current->next;
+    }
+  }
+
+  //std::cout<<"Get at index: "<< index<< " tile: colour "<< current->tile->colour<<" shape: "<<current->tile->shape<<std::endl;
+  return current->tile;
+}
+
+//add a node at an index
+void LinkedList::addAt(int i, Tile* data){
+  Node* current=head;
+  int index=0;
+  while(current!=nullptr && index+1<i){
+    current= current->next;
+    index++;
+  }
+
+  Node* newNode = new Node(data, current->next);
+  current->next= newNode;
+
 }
 
 int LinkedList::size()
@@ -45,82 +183,4 @@ void LinkedList::clear()
   }
   //after deleting the node the head will need to point to nullptr
   head = nullptr;
-}
-
-int LinkedList::get(int i)
-{
-  // //create a node pointing to the head
-  // Node* node = this->head;
-  // //a for loop to iterate through the elements of linkedlist
-  // for (int count=1; count <=i; ++count)
-  // {
-  //   //assigns node to the next node
-  //   node =node->next;
-  // }
-  // //returns the node pointing to the data of the linkedlist in a position i
-  // return node->tile;
-  return i;
-}
-
-void LinkedList::addFront(Tile* tile){
-  Node* newNode = new Node(tile, this->head);
-  this->head = newNode;
-}
-
-void LinkedList::addBack(Tile* tile){
-  Node* newNode = new Node(tile, this->head);
-  newNode->tile = tile;
-  newNode->next = nullptr;
-
-  //if statement to check if head points to nullptr
-  if(this->head==nullptr)
-  {
-    this->head = newNode;
-  }
-  else
-  {
-    //list not Empty
-    //create temporary node to point to the head
-    Node* tempNode = this->head;
-
-    while(tempNode->next!=nullptr)
-    {
-      //iterate through linkedlist until next is nullptr
-      tempNode=tempNode->next;
-    }
-    //assign the temporary node to the next node called newNode
-    tempNode->next=newNode;
-  }
-}
-
-void LinkedList::deleteFront()
-{
-  //create node pointing to head
-  Node* toDelete = head;
-  //point head to next element
-  head = head->next;
-  //deletes the node at the front
-  delete toDelete;
-}
-
-void LinkedList::deleteBack()
-{
-  Node* newNode = head;
-  Node* prevNode = nullptr;
-    if(head->next==nullptr)
-    {
-      newNode=head;
-      delete(newNode);
-    }
-    else
-    {
-      newNode=head;
-      while(newNode->next!=nullptr)
-      {
-        prevNode = newNode;
-        prevNode = newNode->next;
-      }
-      prevNode->next=nullptr;
-      delete(newNode);
-  }
 }

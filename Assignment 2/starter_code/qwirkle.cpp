@@ -1,8 +1,9 @@
 
-#include "LinkedList.h"
-#include "Node.h"
-#include "Tile.h"
+
 #include "TileCodes.h"
+#include "Tile.h"
+#include "Node.h"
+#include "LinkedList.h"
 #include "Board.h"
 #include "Player.h"
 #include "Bag.h"
@@ -10,6 +11,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+
 
 #define EXIT_SUCCESS    0
 
@@ -24,14 +26,34 @@ bool validateName(const std::string& playerName);
 
 int main() {
    LinkedList* list = new LinkedList();
+   Bag* bag = new Bag();
    bool gameInProgress = false;
    if(gameInProgress==false)
    {
+
      showMenu();
      menuOption();
 
+
+    // Board* board = new Board(26,26);
+    // board->printBoard();
+    // board->add(2,2, new Tile(RED, CIRCLE));
+    // board->add(2,3, new Tile(RED, CIRCLE));
+    // board->add(2,1, new Tile(RED, CIRCLE));
+    // board->add(2,0, new Tile(RED, CIRCLE));
+    // board->add(20,3, new Tile(RED, CIRCLE));
+    // board->add(3,3, new Tile(GREEN, CIRCLE));
+    //
+    // board->printBoard();
+
+     // bag->shuffle();
+     // bag->printBag();
+     // bag->takeTile();
+     // bag->printBag();
+
    }
    delete list;
+   delete bag;
    // delete gameInProgress;
 
 
@@ -81,6 +103,7 @@ bool menuOption(){
     std::cout << "Show Student Information." << "\n";
     //displays student information and then returns to menu screen
     showInfo();
+    showMenu();
     menuOption();
 
   } else if (input=='4'){
@@ -93,6 +116,7 @@ bool menuOption(){
     while((input != '1') && (input !='2') &&(input !='3')&&(input!='4'))
     {
     std::cout << "Invalid Input"<< "\n";
+    showMenu();
     menuOption();
     std::cout<<"> ";
     std::cin >>input;
@@ -114,7 +138,7 @@ void newGame(){
   std::cin >>playerName1;
   //while loop to check for validity to player name (name must be uppercase!)
   while(validateName(playerName1)==false){
-    std::cout <<"Uppercase characters only for playername!" <<"\n";
+    std::cout <<"Uppercase characters only for playername 1!" <<"\n";
     std::cout<<"> ";
     std::cin >>playerName1;
   }
@@ -123,7 +147,7 @@ void newGame(){
     std::cin >>playerName2;
   //while loop to check for validity to player name (name must be uppercase!)
   while(validateName(playerName2)==false){
-    std::cout <<"Uppercase characters only for playername!" <<"\n";
+    std::cout <<"Uppercase characters only for playername 2!" <<"\n";
     std::cout<<"> ";
     std::cin >>playerName2;
   }
@@ -146,7 +170,6 @@ void loadGame(){
     std::cout<<"Goodbye"<<"\n";
   }
 
-  // board();
 }
 
 void showInfo(){
