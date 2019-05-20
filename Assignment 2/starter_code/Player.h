@@ -44,6 +44,9 @@ class Player {
 
     bool hasTile(Tile t);
 
+    //this is used when loading a file to set the hand
+    LinkedList* setHand();
+
 };
 
 

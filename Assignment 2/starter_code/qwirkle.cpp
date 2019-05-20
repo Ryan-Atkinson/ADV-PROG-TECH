@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <vector>
 
 #include <sstream>
 #include <string>
@@ -200,7 +201,28 @@ void loadGame(){
             std::string playerHand=line;
 
             //convert score which is current a string to an int
-            std:::stringstream score(playerScore);
+            int score = std::stoi( playerScore );
+
+            //hand into linked list
+            std::stringstream hand(playerHand);
+            vector<std::string> playerHandVector;
+
+            while( hand.good() )
+            {
+                std::string tile;
+                getline( hand, tile, ',' );
+                playerHandVector.push_back( tile );
+
+                std::cout<<tile<<std::endl;
+            }
+
+            LinkedList* handList= new LinkedList();
+            for(std::string tile: playerHandVector){
+              Colour colour=tile[0];
+              Shape shape tile[1] -'0';
+              
+
+            }
 
 
             //reading in the player 2 name
