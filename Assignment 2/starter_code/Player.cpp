@@ -1,63 +1,58 @@
 #include <iostream>
+#include <string>
 #include "Player.h"
 
-Player::Player(std::string playerName) {
-  this->playerName = playerName;
-  this->points = 0;
-  this->hand= new LinkedList();
-}
 
-
-Player::~Player(){
-  delete this->hand;
+Player::Player(std::string name) {
+  name = name;
+  score = 0;
 
 }
 
-
-int Player::getPoints(){
-  return this->points;
-
+int Player::getScore() {
+  return score;
 }
 
-//sets the total points
-void Player::setPoints(int points){
-  this->points =points;
+void Player::setScore(int i) {
+  score=i;
 }
 
-// adds to the current points and then returns the total points
-int Player::addPoints(int points){
-  this->points+=points;
-  return this->points;
+void Player::addPoints(int i) {
+  score+=i;
 }
 
-//gets current size of hand
-int Player::getHandSize(){
-    return hand->size();
+void Player::subtractPoints(int i) {
+  score-=i;
 }
 
-//gets a linked list of the current hand
-LinkedList* Player::getHand(){
+LinkedList* Player::getHand() {
   return hand;
 }
 
-//prints a list of the current hand
-void Player::listHand(){
-  int index=0;
-  while(index<this->hand->size()){
-    Tile* tile = this->hand->get(index);
-    std::cout <<tile->colour<< ", "<< tile->shape<< " ";
-    index++;
+int Player::getHandSize() {
+  return hand->size();
+}
+
+void Player::removeTile(Tile i) {
+  if(hand->size()!=0) {
+    if(hand->contains( i)){
+      hand->deleteData(i);
+    }
+    else {
+      std::cout << "Error: Hand does not contain tile" << std::endl;
+    }
   }
-  std::cout<<std::endl;
+  else {
+    std::cout << "Error: Hand is empty" << std::endl;
+  }
 }
 
-//adds a tile to hand
-void Player::addTile(Tile* tile){
-  this->hand->addBack(tile);
+void Player::drawTile(Bag* bag) {
+  while (hand->size()<5 && bag->size()>0) {
+    hand->addBack(bag->takeTile());
+  }
 }
 
-// removes a tile for the hand
-void Player::removeTile(int index){
-  this->hand->deleteAt(index);
-
+bool Player::hasTile(Tile t) {
+  return hand->contains(t);
 }

@@ -17,6 +17,7 @@ Bag::Bag() {
 Tile* Bag::takeTile(){
   if(this->bagSize==0){
     createBag();
+
   }
   this->bagSize--;
 
@@ -93,7 +94,7 @@ void Bag::createBag(){
 
 
   //std::cout<< "Bag Size: "<< this->bagSize<<std::endl;
-
+  shuffle();
 }
 
 
@@ -105,6 +106,7 @@ void Bag::printBag(){
     std::cout <<tile->colour<< tile->shape<<",";
     index++;
   }
+  std::cout<<std::endl;
 
 
 }

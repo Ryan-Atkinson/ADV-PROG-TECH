@@ -10,6 +10,8 @@
 
 #include <iostream>
 #include <fstream>
+
+#include <sstream>
 #include <string>
 
 
@@ -32,7 +34,11 @@ int main() {
    {
      // showMenu();
      // menuOption();
+     for(int i =0;i<100;i++){
+       bag->takeTile();
 
+     }
+     bag->printBag();
      // Board* board = new Board(26,26);
      // //board->printBoard();
      // bool s = board->add(2,2, new Tile(RED, CIRCLE));
@@ -165,6 +171,87 @@ void loadGame(){
   //checks if input contains EOF character (^D)
   if(std::cin.eof()){
     std::cout<<"Goodbye"<<"\n";
+  } else{
+    std::ifstream inFile;
+    inFile.open(filename);
+
+    if(inFile.good()) {
+
+      //determines what the file is reading in
+      int item=1;
+      std::string playerName;
+      std::string playerScore;
+      std::string playerHand;
+
+      std::string line;
+       while (!inFile.eof()) {
+           std::getline(inFile, line);
+
+         //reading in the player 1 name
+          if(item==1){
+            std::string playerName=line;
+
+            //reading in the player 1 score
+          } else if (item==2){
+            std::string playerScore=line;
+
+            //reading in the player 1 hand
+          } else if(item==3){
+            std::string playerHand=line;
+
+            //convert score which is current a string to an int
+            std:::stringstream score(playerScore);
+
+
+            //reading in the player 2 name
+          } else if (item ==4){
+            std::string playerName1=line;
+
+            // reading player 2 score
+          } else if (item== 5){
+            std::string playerScore=line;
+
+            // reading player 2 hand
+          } else if (item==6){
+
+
+            //reading in the board
+          } else if (item==7){
+
+
+            //reading in the Tile Bag
+          } else if(item==8){
+
+            //reading in current player
+          } else if(item ==9){
+
+          }
+
+
+
+
+
+
+          std::cout << "Read Line: " << line << endl;
+
+          std::getline(inFile, line);
+          std::string playerOneScore.=line;
+
+          std::cout << "Read Line: " << line << endl;
+
+
+
+
+          std::stringstream ss(line);
+          while (!ss.eof()) {
+             std::string word;
+             ss >> word;
+             std::cout << "\tRead Word: " << word << endl;
+          }
+
+
+       }
+    }
   }
 
   // board();

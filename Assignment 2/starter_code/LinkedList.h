@@ -24,6 +24,10 @@ class LinkedList {
     void addAt(int i, Tile* data);
     void deleteAt(int i);
 
+    bool contains(Tile data);
+
+    bool deleteData(Tile data);
+
 
 
 
