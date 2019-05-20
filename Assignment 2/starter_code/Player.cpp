@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include "Player.h"
+#include "Bag.h"
 #include "LinkedList.h"
 
 Player::Player(string name) {
