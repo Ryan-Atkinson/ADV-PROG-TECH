@@ -102,7 +102,7 @@ void Bag::printBag(){
   int index=0;
   while(index<this->bagSize){
     Tile* tile = this->tiles->get(index);
-    std::cout <<" Index: " << index<< " Colour: "<< tile->colour<< " Shape: "<< tile->shape<<std::endl;
+    std::cout <<tile->colour<< tile->shape<<",";
     index++;
   }
 

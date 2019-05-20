@@ -33,8 +33,17 @@ int main() {
      // showMenu();
      // menuOption();
 
-     Board* board = new Board(26,26);
-     board->printBoard();
+     // Board* board = new Board(26,26);
+     // //board->printBoard();
+     // bool s = board->add(2,2, new Tile(RED, CIRCLE));
+     // board->add(2,3, new Tile(RED, CIRCLE));
+     // board->add(2,1, new Tile(RED, CIRCLE));
+     // board->add(2,0, new Tile(RED, CIRCLE));
+     //
+     // board->add(20,3, new Tile(RED, CIRCLE));
+     // board->add(3,3, new Tile(GREEN, CIRCLE));
+     //
+     // board->printBoard();
 
      // bag->shuffle();
      // bag->printBag();
