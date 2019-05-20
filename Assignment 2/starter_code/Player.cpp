@@ -30,17 +30,21 @@ LinkedList<Tile> Player::getHand() {
 }
 
 int Player::getHandSize() {
-  return hand.size();
+  return hand->size();
 }
 
 void Player::removeTile(Tile i) {
-  if(hand.size()!=0) {
-    if(hand.get(Tile i) {
-      hand.deleteAt(Tile i)
+  if(hand->size()!=0) {
+    if(hand->contains(Tile i)){
+      hand->deleteAt(Tile i);
     }
-
+    else {
+      std::cout << "Error: Hand does not contain tile" << std::endl;
+    }
   }
-
+  else {
+    std::cout << "Error: Hand is empty" << std::endl;
+  }
 }
 
 void Player::drawTiles(Bag& bag) {
@@ -50,5 +54,5 @@ void Player::drawTiles(Bag& bag) {
 }
 
 bool Player::hasTile(Tile t) {
-  if ()
+  if (hand.getTile)
 }

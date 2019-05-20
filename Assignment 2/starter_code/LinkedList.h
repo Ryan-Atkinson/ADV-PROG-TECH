@@ -13,6 +13,7 @@ public:
    int size();
    void clear();
    int get(int i);
+   bool contains();
 
    void addFront(Tile* tile);
    void addBack(Tile* tile);

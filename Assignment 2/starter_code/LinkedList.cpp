@@ -47,7 +47,7 @@ void LinkedList::clear()
   head = nullptr;
 }
 
-int LinkedList::get(Tile i)
+int LinkedList::get(int i)
 {
   //create a node pointing to the head
   Node* node = this->head;
@@ -61,6 +61,15 @@ int LinkedList::get(Tile i)
    return node->tile;
   return i;
 }
+
+bool LinkedList::contains(Node* head, Tile* t) {
+  Node* current = head;
+  while(current !=NULL) {
+    if(current->tile==t) {
+      return true;
+      current = current->next
+    }
+  }
 
 void LinkedList::addFront(Tile* tile){
   Node* newNode = new Node(tile, this->head);
