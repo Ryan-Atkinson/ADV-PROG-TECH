@@ -31,7 +31,7 @@ Board::~Board(){
 void Board::printBoard(){
 
   //prints the column numbers
-  std::cout<<"  ";
+  std::cout<<"   ";
   for(int i =0; i<col;i++){
     if(i<10){
       std::cout<<i<<"  ";
@@ -44,6 +44,7 @@ void Board::printBoard(){
 
   //prints the dashs
   std::cout<<"  ";
+
   for(int i =0; i<col;i++){
     std::cout<<"---";
   }
@@ -56,9 +57,14 @@ void Board::printBoard(){
     std::cout<<"|";
     for(int j=0; j<col;j++){
 
+      // if no tile exists in this positon on the board
+    
       if(this->board[i][j]==nullptr){
         std::cout<<"  ";
+
+        //if a tile exists it prints the tile
       } else{
+
         std::cout<<this->board[i][j]->colour<<this->board[i][j]->colour;
       }
       std::cout<<"|";
@@ -70,10 +76,11 @@ void Board::printBoard(){
 
 }
 
-bool Board::add(int row, int column, Tile& piece) {
-  // if (array[row][col] == '  ') {
-  //   array[row][col] = piece;
-  return true;
+//adds a piece to the board
+
+bool Board::add(int row, int column, Tile* piece) {
+
+  return false;
 
 
 }

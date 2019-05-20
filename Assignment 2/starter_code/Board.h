@@ -8,7 +8,7 @@ class Board {
   public:
     Board(int row, int col);
     ~Board();
-    bool add(int row, int col, Tile& piece);
+    bool add(int row, int col, Tile* piece);
     void printBoard();
 
 
