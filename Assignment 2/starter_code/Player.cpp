@@ -48,11 +48,16 @@ void Player::removeTile(Tile i) {
 }
 
 void Player::drawTiles(Bag& bag) {
-  while (hand.size()<5 && bag.size()>0) {
-    hand.addBack(bag.takeTile());
+  while (hand->size()<5 && bag->size()>0) {
+    hand->addBack(bag->takeTile());
   }
 }
 
 bool Player::hasTile(Tile t) {
-  if (hand.getTile)
+  if (hand->contains(t)) {
+    return true;
+  }
+  else {
+    return false;
+  }
 }

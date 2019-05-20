@@ -67,7 +67,7 @@ bool LinkedList::contains(Node* head, Tile* t) {
   while(current !=NULL) {
     if(current->tile==t) {
       return true;
-      current = current->next
+      current = current->next;
     }
   }
 
