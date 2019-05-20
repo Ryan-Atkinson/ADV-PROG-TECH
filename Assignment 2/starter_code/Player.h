@@ -1,9 +1,9 @@
 #ifndef ASSIGN2_PLAYER_H
 #define ASSIGN2_PLAYER_H
 
-#include "LinkedList.h"
-#include "Bag.h"
+
 #include "Tile.h"
+#include "LinkedList.h"
 #include <string>
 
 
@@ -15,6 +15,8 @@ class Player {
   public:
     Player(std::string name);
     ~Player();
+
+    std::string getName();
 
 
     int getScore();
@@ -45,7 +47,7 @@ class Player {
     bool hasTile(Tile t);
 
     //this is used when loading a file to set the hand
-    LinkedList* setHand();
+    void setHand(LinkedList* list);
 
 };
 

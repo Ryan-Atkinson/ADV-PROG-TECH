@@ -1,12 +1,12 @@
 
-
+#include "Bag.h"
 #include "TileCodes.h"
 #include "Tile.h"
 #include "Node.h"
 #include "LinkedList.h"
 #include "Board.h"
 #include "Player.h"
-#include "Bag.h"
+
 
 #include <iostream>
 #include <fstream>
@@ -25,6 +25,7 @@ void newGame();
 void loadGame();
 void showInfo();
 bool validateName(const std::string& playerName);
+Player* loadPlayer(std::string playerName, std::string playerScore, std::string playerHand);
 
 
 int main() {
@@ -33,13 +34,14 @@ int main() {
    bool gameInProgress = false;
    if(gameInProgress==false)
    {
-     // showMenu();
-     // menuOption();
-     for(int i =0;i<100;i++){
-       bag->takeTile();
-
-     }
      bag->printBag();
+     showMenu();
+     menuOption();
+     // for(int i =0;i<100;i++){
+     //   bag->takeTile();
+     //
+     // }
+     // bag->printBag();
      // Board* board = new Board(26,26);
      // //board->printBoard();
      // bool s = board->add(2,2, new Tile(RED, CIRCLE));
@@ -53,7 +55,7 @@ int main() {
      // board->printBoard();
 
      // bag->shuffle();
-     // bag->printBag();
+
      // bag->takeTile();
      // bag->printBag();
 
@@ -180,103 +182,196 @@ void loadGame(){
 
       //determines what the file is reading in
       int item=1;
+      Player* player1 =nullptr;
+      Player* player2 =nullptr;
+      Board* tileBoard =nullptr;
+      Bag* newBag = new Bag();
       std::string playerName;
       std::string playerScore;
       std::string playerHand;
-
+      std::string currentPlayer;
       std::string line;
        while (!inFile.eof()) {
            std::getline(inFile, line);
 
          //reading in the player 1 name
           if(item==1){
-            std::string playerName=line;
-
+            playerName=line;
+            std::cout<<"Read Player Name 1: "<<line<<std::endl;
             //reading in the player 1 score
           } else if (item==2){
-            std::string playerScore=line;
-
+            playerScore=line;
+            std::cout<<"Read Score : "<<line<<std::endl;
             //reading in the player 1 hand
           } else if(item==3){
-            std::string playerHand=line;
-
-            //convert score which is current a string to an int
-            int score = std::stoi( playerScore );
-
-            //hand into linked list
-            std::stringstream hand(playerHand);
-            vector<std::string> playerHandVector;
-
-            while( hand.good() )
-            {
-                std::string tile;
-                getline( hand, tile, ',' );
-                playerHandVector.push_back( tile );
-
-                std::cout<<tile<<std::endl;
-            }
-
-            LinkedList* handList= new LinkedList();
-            for(std::string tile: playerHandVector){
-              Colour colour=tile[0];
-              Shape shape tile[1] -'0';
-              
-
-            }
-
+            playerHand=line;
+            player1= loadPlayer(playerName, playerScore, playerHand);
+            player1->getScore();
 
             //reading in the player 2 name
           } else if (item ==4){
-            std::string playerName1=line;
+            playerName=line;
+            std::cout<<"Read Player Name 2: "<<line<<std::endl;
 
             // reading player 2 score
           } else if (item== 5){
-            std::string playerScore=line;
-
+            playerScore=line;
+            std::cout<<"Read Score : "<<line<<std::endl;
             // reading player 2 hand
           } else if (item==6){
-
-
+            playerHand=line;
+            player2= loadPlayer(playerName, playerScore, playerHand);
+            player2->getScore();
             //reading in the board
           } else if (item==7){
+            std::cout<<line<<std::endl;
+            std::getline(inFile, line);
+            std::cout<<line<<std::endl;
+            std::getline(inFile, line);
+
+            int col=0;
+            int row=0;
+            std::vector< std::vector<std::string>> boardVector;
+            while(line[1]==' ' && !inFile.eof()){
+              boardVector.push_back(std::vector<std::string>());
+              std::cout<<line<<std::endl;
+
+              if(line[1]==' '){
+                col=0;
+                std::stringstream boardRow(line);
+
+
+                //splits the hand string into tiles
+                while( boardRow.good() ){
+
+                  std::string tile;
+                  getline( boardRow, tile, '|' );
+                  if(col !=0){
+                    boardVector[row].push_back( tile );
+                  }
+
+
+                  std::cout<<"Tile: "<< tile<<std::endl;
+
+                  std::cout<< "Col "<< col<<std::endl;
+                  col++;
+                }
+                std::getline(inFile, line);
+                std::cout<<line<<std::endl;
+                row++;
+
+            }
+
+            //creates board
+            Tile*** board= new Tile**[row];
+            for(int i = 0; i < row; i++){
+              board[i] = new Tile*[col];
+            }
+
+            for(int i=0; i<row;i++){
+              for(int j=0; j<col; j++){
+                std::string tile=boardVector[i][j];
+                if(tile[0]!=' '){
+                  Colour colour=tile[0];
+                  Shape shape =tile[1] -'0';
+                  board[i][j]= new Tile(colour, shape);
+                }
+              }
+            }
+            tileBoard = new Board(row, col);
+            tileBoard->setBoard(board);
+            tileBoard->printBoard();
+
+
+            }
 
 
             //reading in the Tile Bag
           } else if(item==8){
 
+            std::stringstream hand(playerHand);
+            std::vector<std::string> bagVector;
+
+            while( hand.good() )
+            {
+                std::string tile;
+                getline( hand, tile, ',' );
+                bagVector.push_back( tile );
+
+                std::cout<<tile<<std::endl;
+            }
+
+            LinkedList* tileBag= new LinkedList();
+
+            //for each of those tiles it adds the linkedlist
+            for(std::string tile: bagVector){
+              Colour colour=tile[0];
+              Shape shape =tile[1] -'0';
+              tileBag->addBack(new Tile(colour, shape));
+
+
+            }
+            newBag->setBag(tileBag);
+            newBag->printBag();
+
             //reading in current player
           } else if(item ==9){
+            currentPlayer=line;
 
           }
 
 
 
-
-
-
-          std::cout << "Read Line: " << line << endl;
-
-          std::getline(inFile, line);
-          std::string playerOneScore.=line;
-
-          std::cout << "Read Line: " << line << endl;
-
-
-
-
-          std::stringstream ss(line);
-          while (!ss.eof()) {
-             std::string word;
-             ss >> word;
-             std::cout << "\tRead Word: " << word << endl;
-          }
-
+          item++;
 
        }
+    } else{
+      std::cout<<"Invalid File"<<std::endl;
+
+      showMenu();
+      menuOption();
     }
   }
 
   // board();
+}
+
+Player* loadPlayer(std::string playerName, std::string playerScore, std::string playerHand){
+
+
+  //convert score which is current a string to an int
+  int score = std::stoi( playerScore );
+
+  //hand into linked list
+  std::stringstream hand(playerHand);
+  std::vector<std::string> playerHandVector;
+
+  //splits the hand string into tiles
+  while( hand.good() )
+  {
+      std::string tile;
+      getline( hand, tile, ',' );
+      playerHandVector.push_back( tile );
+
+      std::cout<<tile<<std::endl;
+  }
+
+  LinkedList* handList= new LinkedList();
+
+  //for each of those tiles it adds the linkedlist
+  for(std::string tile: playerHandVector){
+    Colour colour=tile[0];
+    Shape shape =tile[1] -'0';
+    handList->addBack(new Tile(colour, shape));
+
+  }
+
+  //creates a Player
+  Player* player= new Player(playerName);
+  player->setScore(score);
+  player->setHand(handList);
+
+  return player;
 }
 
 void showInfo(){

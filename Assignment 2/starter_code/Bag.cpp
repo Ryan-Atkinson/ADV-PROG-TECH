@@ -15,17 +15,22 @@ Bag::Bag() {
 }
 
 Tile* Bag::takeTile(){
-  if(this->bagSize==0){
-    createBag();
 
-  }
+  //returns nullptr if the tile bag is emty
+  Tile* tile =nullptr;
+
+
+  if(this->bagSize!=0){
+
   this->bagSize--;
 
   //get the tile at the start of the linked list
-  Tile* tile = this->tiles->get(0);
+  tile = this->tiles->get(0);
 
   //then removes the tile at the start of the list
   this->tiles->deleteFront();
+
+  }
 
 
   return tile;
@@ -33,6 +38,10 @@ Tile* Bag::takeTile(){
 
 int Bag::size() {
   return this->bagSize;
+}
+
+void Bag::setBag(LinkedList* tiles){
+  this->tiles=tiles;
 }
 
 void Bag::shuffle(){

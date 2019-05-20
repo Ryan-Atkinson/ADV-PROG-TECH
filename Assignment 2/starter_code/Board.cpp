@@ -95,7 +95,7 @@ bool Board::add(int row, int column, Tile* piece) {
       while(!anyTileExists && currRow<this->row && currCol<this->row){
         if(this->board[currRow][currCol]!=nullptr){
           anyTileExists=true;
-        
+
         }
         currRow++;
         currCol++;
@@ -189,6 +189,10 @@ bool Board::add(int row, int column, Tile* piece) {
   }
 
   return tileAdded;
+}
+
+void Board::setBoard(Tile*** board){
+  this->board=board;
 }
 // Board::Board(const int row,const int col){
 //   const char row = 6;
