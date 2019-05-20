@@ -62,9 +62,10 @@ int LinkedList::get(int i)
   return i;
 }
 
+//boolean to check if list contains an entered tile
 bool LinkedList::contains(Node* head, Tile* t) {
   Node* current = head;
-  while(current !=NULL) {
+  while(current != nullptr) {
     if(current->tile==t) {
       return true;
       current = current->next;
