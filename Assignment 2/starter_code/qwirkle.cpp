@@ -30,8 +30,11 @@ int main() {
    bool gameInProgress = false;
    if(gameInProgress==false)
    {
-     showMenu();
-     menuOption();
+     // showMenu();
+     // menuOption();
+
+     Board* board = new Board(26,26);
+     board->printBoard();
 
      // bag->shuffle();
      // bag->printBag();

@@ -77,7 +77,7 @@ void Bag::createBag(){
   Shape shapes [6] = {CIRCLE, STAR_4, DIAMOND, SQUARE, STAR_6, CLOVER };
 
   // a nested foor loop pairs up each shape and colour combination
-  std::cout<<"Tile Bag"<<std::endl;
+  //std::cout<<"Tile Bag"<<std::endl;
   for(Colour colour: colours){
     for(Shape shape: shapes){
       //std::cout<<"s"<< std::endl;
@@ -92,7 +92,7 @@ void Bag::createBag(){
 
 
 
-  std::cout<< "Bag Size: "<< this->bagSize<<std::endl;
+  //std::cout<< "Bag Size: "<< this->bagSize<<std::endl;
 
 }
 
