@@ -47,7 +47,7 @@ void LinkedList::clear()
   head = nullptr;
 }
 
-int LinkedList::get(int i)
+int LinkedList::get(Tile i)
 {
   //create a node pointing to the head
   Node* node = this->head;

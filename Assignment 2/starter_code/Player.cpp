@@ -33,8 +33,11 @@ int Player::getHandSize() {
   return hand.size();
 }
 
-void Player::removeTile() {
-  if(hand.!empty) {
+void Player::removeTile(Tile i) {
+  if(hand.size()!=0) {
+    if(hand.get(Tile i) {
+      hand.deleteAt(Tile i)
+    }
 
   }
 

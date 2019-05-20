@@ -20,7 +20,7 @@ public:
    void deleteFront();
    void deleteBack();
 
-   void deleteAt(int i);
+   void deleteAt(Tile* tile);
 
 
 private:
