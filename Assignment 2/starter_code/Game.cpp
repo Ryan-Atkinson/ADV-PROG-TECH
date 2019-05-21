@@ -115,8 +115,11 @@ bool Game::addTileToBoard(std::string tile, int tileRow, int tileCol){
   // have to validate this string somewhere
 
   //if this tile is a valid tile
-  int shape = tile[1] -'0';
-
+  std::cout<<" game tile row"<< tileRow<<std::endl;
+  std::cout<<" game tile col"<< tileCol<<std::endl;
+  std::cout<<"game tile:"<<tile<<std::endl;
+  int shape = tile[1]-'0';
+  std::cout<<shape<<std::endl;
   if ((tile[0]==RED || tile[0]==ORANGE || tile[0]==YELLOW || tile[0]==GREEN || tile[0]==BLUE || tile[0]==PURPLE) &&
   (shape==CIRCLE || shape==STAR_4 ||  shape==DIAMOND ||  shape==SQUARE ||  shape==STAR_6 ||  shape==CLOVER)){
     Tile* tilePiece = new Tile(tile[0], shape);
@@ -171,12 +174,14 @@ bool Game::addTileToBoard(std::string tile, int tileRow, int tileCol){
       }else{
         north=true;
       }
+    } else{
+      north=true;
     }
 
 
 
     //if the tile is not against the south border
-    if(tileRow<maxRow && north){
+    if(tileRow<maxRow){
 
       if(tileBoard[tileRow+1][tileCol]!=nullptr){
         if (tileBoard[tileRow+1][tileCol]->colour ==tilePiece->colour
@@ -198,10 +203,12 @@ bool Game::addTileToBoard(std::string tile, int tileRow, int tileCol){
          south=true;
        }
 
+    } else{
+      south=true;
     }
 
     //if this piece is not against the east border
-    if(tileCol<maxCol && south && north){
+    if(tileCol<maxCol ){
       //if piece is compatable with the adjcent east tile
       if(tileBoard[tileRow][tileCol+1]!=nullptr){
         if (tileBoard[tileRow][tileCol+1]->colour ==tilePiece->colour
@@ -222,10 +229,12 @@ bool Game::addTileToBoard(std::string tile, int tileRow, int tileCol){
     } else{
       east=true;
     }
+  } else{
+    east=true;
   }
 
     //if piece is not against the west border
-    if(tileCol>0 && east && north && south ){
+    if(tileCol>0){
         //if piece is compatable with the adjcent west tile
         if(tileBoard[tileRow][tileCol-1]!=nullptr){
           if (tileBoard[tileRow][tileCol-1]->colour ==tilePiece->colour
@@ -246,8 +255,14 @@ bool Game::addTileToBoard(std::string tile, int tileRow, int tileCol){
         west=true;
       }
 
+    } else{
+      west=true;
     }
+    std::cout<<"north: "<<north<<std::endl;
+    std::cout<<"south: "<<south<<std::endl;
 
+    std::cout<<"east: "<<east<<std::endl;
+    std::cout<<"west: "<<west<<std::endl;
     //if all adjcent tiles are compatable then the piece is added
     if(north && east && south && west && (numNorth+numSouth)<6 && (numEast+numWest)<6){
       std::cout<<"num west"<<numWest<<std::endl;

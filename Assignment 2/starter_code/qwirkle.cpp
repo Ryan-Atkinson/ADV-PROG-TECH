@@ -118,7 +118,7 @@ void startGame(Game* game){
 
     //prints scores
     std::cout<<"Score for A: "<<currentPlayer->getScore()<<std::endl;
-    std::cout<<"Score for B: "<<currentPlayer->getScore()<<std::endl;
+    std::cout<<"Score for B: "<<game->getOtherPlayer()->getScore()<<std::endl;
     std::cout<<std::endl;
 
     //prints board
@@ -148,20 +148,24 @@ void startGame(Game* game){
         std::cout<<"Goodbye"<<"\n";
         exit(0);
       }
-
+      std::string type="";
+      std::string tile="";
       std::stringstream userInput(input);
-      //splits the hand string into tiles
+      std::getline( userInput, type );
 
       int foundInput=false;
       int inputType=0;
-      int counter=0;
+      int counter=1;
       while( userInput.good() || !foundInput){
+        std::cin >> input;
+        std::stringstream userInput(input);
+
 
         std::string word="";
 
-        getline( userInput, word );
+        std::getline( userInput, word );
         std::cout<<"Line 163: Word: "<< word<<std::endl;
-        if(word.compare("replace")==0|| inputType==USER_REPLACE){
+        if(type.compare("replace")==0|| inputType==USER_REPLACE){
           inputType=USER_REPLACE;
           if(counter==1){
             bool replaced= game->replaceTile(word);
@@ -172,28 +176,34 @@ void startGame(Game* game){
             foundInput=true;
           }
 
-        } else if (word.compare("place")==0 || inputType== USER_PLACE){
+        } else if (type.compare("place")==0 || inputType== USER_PLACE){
           std::cout<<"Line 167: Compare: "<< word.compare("place")<<std::endl;
-          std::string tile="";
 
+          inputType=USER_PLACE;
+          if(counter==1){
+            tile=word;
+            std::cout<<"Line 173: Tile: "<<tile<<std::endl;
+          } else if (counter==2){
 
-
-          tile=word;
-          std::cout<<"Line 173: Tile: "<<tile<<std::endl;
-
-
-
-          int row=word[0]-65;
-          int col =word[1]-'0';
-          bool isValid=game->addTileToBoard(tile, row, col);
-          if(isValid){
-            hasValidInput=true;
+          } else if (counter ==3){
+            int row=word[0]-65;
+            std::cout<<"Line 189: row: "<<row<<std::endl;
+            int col =word[1]-'0';
+            std::cout<<"Line 191: col: "<<col<<std::endl;
+            bool isValid=game->addTileToBoard(tile, row, col);
+            if(isValid){
+              hasValidInput=true;
+            }
+            foundInput=true;
           }
 
 
-          foundInput=true;
-        } else if(word.compare("save")) {
+        } else if (type.compare("save") || inputType==USER_SAVE) {
           //TODO
+          inputType=USER_SAVE;
+          if(counter==1){
+
+          }
 
           foundInput=true;
         }
@@ -201,16 +211,18 @@ void startGame(Game* game){
           std::cout<<"Input is Invalid, try place or replace at tile"<<std::endl;
           foundInput=true;
         }
+        counter++;
 
 
       }
-      if(!hasValidInput){
-        std::cout<<"Please type valid input"<<std::endl;
-      }
+      // if(!hasValidInput){
+      //   std::cout<<"Please type valid input"<<std::endl;
+      // }
 
     }
     playingGame = !game->hasGameEnded();
     game->changeCurrentPlayer();
+
 
   }
   std::cout<<"Game has ended"<<std::endl;
