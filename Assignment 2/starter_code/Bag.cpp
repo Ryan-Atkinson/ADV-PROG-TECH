@@ -15,16 +15,22 @@ Bag::Bag() {
 }
 
 Tile* Bag::takeTile(){
-  if(this->bagSize==0){
-    createBag();
-  }
+
+  //returns nullptr if the tile bag is emty
+  Tile* tile =nullptr;
+
+
+  if(this->bagSize!=0){
+
   this->bagSize--;
 
   //get the tile at the start of the linked list
-  Tile* tile = this->tiles->get(0);
+  tile = this->tiles->get(0);
 
   //then removes the tile at the start of the list
   this->tiles->deleteFront();
+
+  }
 
 
   return tile;
@@ -32,6 +38,10 @@ Tile* Bag::takeTile(){
 
 int Bag::size() {
   return this->bagSize;
+}
+
+void Bag::setBag(LinkedList* tiles){
+  this->tiles=tiles;
 }
 
 void Bag::shuffle(){
@@ -77,7 +87,7 @@ void Bag::createBag(){
   Shape shapes [6] = {CIRCLE, STAR_4, DIAMOND, SQUARE, STAR_6, CLOVER };
 
   // a nested foor loop pairs up each shape and colour combination
-  std::cout<<"Tile Bag"<<std::endl;
+  //std::cout<<"Tile Bag"<<std::endl;
   for(Colour colour: colours){
     for(Shape shape: shapes){
       //std::cout<<"s"<< std::endl;
@@ -92,8 +102,8 @@ void Bag::createBag(){
 
 
 
-  std::cout<< "Bag Size: "<< this->bagSize<<std::endl;
-
+  //std::cout<< "Bag Size: "<< this->bagSize<<std::endl;
+  shuffle();
 }
 
 
@@ -102,9 +112,10 @@ void Bag::printBag(){
   int index=0;
   while(index<this->bagSize){
     Tile* tile = this->tiles->get(index);
-    std::cout <<" Index: " << index<< " Colour: "<< tile->colour<< " Shape: "<< tile->shape<<std::endl;
+    std::cout <<tile->colour<< tile->shape<<",";
     index++;
   }
+  std::cout<<std::endl;
 
 
 }

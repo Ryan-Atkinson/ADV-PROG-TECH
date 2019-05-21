@@ -1,25 +1,53 @@
-
 #ifndef ASSIGN2_PLAYER_H
 #define ASSIGN2_PLAYER_H
 
+
+#include "Tile.h"
 #include "LinkedList.h"
 #include <string>
-#include "Bag.h"
+
 
 class Player {
   private:
-    string name;
+    std::string name;
     int score;
-    LinkedList<Tile> hand;
+    LinkedList* hand;
   public:
-    Player();
+    Player(std::string name);
+    ~Player();
+
+    std::string getName();
+
+
     int getScore();
-    void setScore(int);
-    void addPoints(int);
-    void subtractPoints(int);
-    LinkedList<Tile> getHand();
+
+    //sets the total score
+    void setScore(int i);
+
+    // adds to the current points
+    void addPoints(int i);
+
+    void subtractPoints(int i);
+
+    //gets current size of hand
     int getHandSize();
-    void drawTiles();
+
+    //gets a linked list of the current hand
+    LinkedList* getHand();
+
+    //prints a list of the current hand
+    void printHand();
+
+    //adds a tile to hand
+    void drawTile(Bag* bag);
+
+    // removes a tile for the hand by index of the tile in the linked list
+    void removeTile(Tile i);
+
+    bool hasTile(Tile t);
+
+    //this is used when loading a file to set the hand
+    void setHand(LinkedList* list);
 
 
 }
