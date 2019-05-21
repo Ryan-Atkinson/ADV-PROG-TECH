@@ -3,6 +3,7 @@
 #include "TileCodes.h"
 
 #include <iostream>
+#include <fstream>
 
 #include <string>
 
@@ -349,5 +350,11 @@ int Game::findScore(int numNorth, int numSouth, int numEast, int numWest){
 
 bool Game::hasGameEnded(){
   return false;
+
+}
+
+void Game::save(std::string& filename){
+  std::ostream& outputStream = std::cout;
+  file.open (file);
 
 }

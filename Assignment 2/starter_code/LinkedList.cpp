@@ -237,10 +237,8 @@ void LinkedList::clear()
 }
 
 void LinkedList::print(Node *head) {
-  if(head == nullptr) {
-    std::cout << "nullptr" << endl;
-  }
-  else {
-    std::cout << head->tile << endl;
+  while(head !=nullptr) {
+    std::cout << head->tile << ",";
+    head = head->next;
   }
 }
