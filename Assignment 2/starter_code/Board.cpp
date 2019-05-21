@@ -88,116 +88,116 @@ int getMaxCol(){
 //checks if the cell can be added to the board
 
 bool Board::add(int row, int column, Tile* piece) {
-  bool tileAdded=false;
-
-  //checks to see if the row and column are validate on the board
-  if(row>=0 && row<this->row && column>=0 && column<this->col){
-
-    if(this->board[row][column]==nullptr){
-      bool anyTileExists= false;
-
-      int currRow=0;
-      int currCol=0;
-
-      //checks to see if there are any tiles on teh board,
-      //if not it's the first turn and the player can place anything anywhere
-      while(!anyTileExists && currRow<this->row && currCol<this->row){
-        if(this->board[currRow][currCol]!=nullptr){
-          anyTileExists=true;
-
-        }
-        currRow++;
-        currCol++;
-      }
-
-      //if tile exist on a border, as to check if adjecent tiles are compatable
-      if(anyTileExists){
-
-
-        //if there is actually an adjcent tile in again off the cells
-        bool tileExist=false;
-
-        //cehcsk if the neighbours are compatable
-        bool north=false;
-        bool east = false;
-        bool south= false;
-        bool west=false;
-
-        //if the tile is not against the north border
-        if(row>0){
-          //if tile is compatable with the adjcent north tile
-          if(this->board[row-1][column] ==nullptr){
-            north=true;
-
-          } else if (this->board[row-1][column]->colour ==piece->colour || this->board[row-1][column]->shape ==piece->shape){
-            tileExist=true;
-            north=true;
-          }
-        } else{
-          north=true;
-        }
-
-        //if the tile is not against the south border
-        if(row<this->row){
-            //if tile is compatable with the adjcent south tile
-          if(this->board[row+1][column] ==nullptr){
-            south=true;
-
-          } else if (this->board[row+1][column]->colour ==piece->colour || this->board[row+1][column]->shape ==piece->shape){
-            tileExist=true;
-            south=true;
-          }
-        } else{
-          south=true;
-        }
-
-        //if this piece is not against the east border
-        if(column<this->col){
-            //if piece is compatable with the adjcent east tile
-          if(this->board[row][column+1] ==nullptr){
-            east=true;
-
-          } else if (this->board[row][column+1]->colour ==piece->colour || this->board[row][column+1]->shape ==piece->shape){
-            tileExist=true;
-            east=true;
-          }
-        } else{
-          east=true;
-        }
-
-        //if piece is not against the west border
-        if(column>0){
-            //if piece is compatable with the adjcent west tile
-          if(this->board[row][column-1] ==nullptr){
-            west=true;
-
-          } else if (this->board[row][column-1]->colour ==piece->colour || this->board[row][column-1]->shape ==piece->shape){
-            tileExist=true;
-            west=true;
-          }
-        } else{
-          west=true;
-        }
-
-        //if all adjcent tiles are compatable then the piece is added
-        if(tileExist && north && east && south && west){
-          this->board[row][column]=piece;
-          tileAdded=true;
-        }
-
-      } else{
-        this->board[row][column]=piece;
-        tileAdded=true;
-      }
-    }
-
-
-  }
-  if(tileAdded){
-    std::cout<<"Colour: "<<this->board[row][column]->colour<<std::endl;
-  }
-
-  return tileAdded;
+  // bool tileAdded=false;
+  //
+  // //checks to see if the row and column are validate on the board
+  // if(row>=0 && row<this->row && column>=0 && column<this->col){
+  //
+  //   if(this->board[row][column]==nullptr){
+  //     bool anyTileExists= false;
+  //
+  //     int currRow=0;
+  //     int currCol=0;
+  //
+  //     //checks to see if there are any tiles on teh board,
+  //     //if not it's the first turn and the player can place anything anywhere
+  //     while(!anyTileExists && currRow<this->row && currCol<this->row){
+  //       if(this->board[currRow][currCol]!=nullptr){
+  //         anyTileExists=true;
+  //
+  //       }
+  //       currRow++;
+  //       currCol++;
+  //     }
+  //
+  //     //if tile exist on a border, as to check if adjecent tiles are compatable
+  //     if(anyTileExists){
+  //
+  //
+  //       //if there is actually an adjcent tile in again off the cells
+  //       bool tileExist=false;
+  //
+  //       //cehcsk if the neighbours are compatable
+  //       bool north=false;
+  //       bool east = false;
+  //       bool south= false;
+  //       bool west=false;
+  //
+  //       //if the tile is not against the north border
+  //       if(row>0){
+  //         //if tile is compatable with the adjcent north tile
+  //         if(this->board[row-1][column] ==nullptr){
+  //           north=true;
+  //
+  //         } else if (this->board[row-1][column]->colour ==piece->colour || this->board[row-1][column]->shape ==piece->shape){
+  //           tileExist=true;
+  //           north=true;
+  //         }
+  //       } else{
+  //         north=true;
+  //       }
+  //
+  //       //if the tile is not against the south border
+  //       if(row<this->row){
+  //           //if tile is compatable with the adjcent south tile
+  //         if(this->board[row+1][column] ==nullptr){
+  //           south=true;
+  //
+  //         } else if (this->board[row+1][column]->colour ==piece->colour || this->board[row+1][column]->shape ==piece->shape){
+  //           tileExist=true;
+  //           south=true;
+  //         }
+  //       } else{
+  //         south=true;
+  //       }
+  //
+  //       //if this piece is not against the east border
+  //       if(column<this->col){
+  //           //if piece is compatable with the adjcent east tile
+  //         if(this->board[row][column+1] ==nullptr){
+  //           east=true;
+  //
+  //         } else if (this->board[row][column+1]->colour ==piece->colour || this->board[row][column+1]->shape ==piece->shape){
+  //           tileExist=true;
+  //           east=true;
+  //         }
+  //       } else{
+  //         east=true;
+  //       }
+  //
+  //       //if piece is not against the west border
+  //       if(column>0){
+  //           //if piece is compatable with the adjcent west tile
+  //         if(this->board[row][column-1] ==nullptr){
+  //           west=true;
+  //
+  //         } else if (this->board[row][column-1]->colour ==piece->colour || this->board[row][column-1]->shape ==piece->shape){
+  //           tileExist=true;
+  //           west=true;
+  //         }
+  //       } else{
+  //         west=true;
+  //       }
+  //
+  //       //if all adjcent tiles are compatable then the piece is added
+  //       if(tileExist && north && east && south && west){
+  //         this->board[row][column]=piece;
+  //         tileAdded=true;
+  //       }
+  //
+  //     } else{
+  //       this->board[row][column]=piece;
+  //       tileAdded=true;
+  //     }
+  //   }
+  //
+  //
+  // }
+  // if(tileAdded){
+  //   std::cout<<"Colour: "<<this->board[row][column]->colour<<std::endl;
+  // }
+  this->board[row][column]=piece;
+  return true;
 }
 
 void Board::setBoard(Tile*** board){
