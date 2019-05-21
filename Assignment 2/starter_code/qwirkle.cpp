@@ -116,7 +116,7 @@ bool menuOption(){
   } else if (input=='4'){
     std::cout << "Quiting the menu" << "\n";
     //clears the screen with 50 end lines and exits the program without crashing
-    std::cout << std::string( 50, '\n' );
+    std::cout << std::string(50, '\n' );
     exit(0);
 
   }else{
@@ -197,11 +197,11 @@ void loadGame(){
          //reading in the player 1 name
           if(item==1){
             playerName=line;
-            std::cout<<"Read Player Name 1: "<<line<<std::endl;
+          //  std::cout<<"Read Player Name 1: "<<line<<std::endl;
             //reading in the player 1 score
           } else if (item==2){
             playerScore=line;
-            std::cout<<"Read Score : "<<line<<std::endl;
+          //  std::cout<<"Read Score : "<<line<<std::endl;
             //reading in the player 1 hand
           } else if(item==3){
             playerHand=line;
@@ -211,12 +211,12 @@ void loadGame(){
             //reading in the player 2 name
           } else if (item ==4){
             playerName=line;
-            std::cout<<"Read Player Name 2: "<<line<<std::endl;
+          //  std::cout<<"Read Player Name 2: "<<line<<std::endl;
 
             // reading player 2 score
           } else if (item== 5){
             playerScore=line;
-            std::cout<<"Read Score : "<<line<<std::endl;
+          //  std::cout<<"Read Score : "<<line<<std::endl;
             // reading player 2 hand
           } else if (item==6){
             playerHand=line;
@@ -224,17 +224,19 @@ void loadGame(){
             player2->getScore();
             //reading in the board
           } else if (item==7){
-            std::cout<<line<<std::endl;
+          //  std::cout<<"line 227:"<< line<<std::endl;
             std::getline(inFile, line);
-            std::cout<<line<<std::endl;
+          //  std::cout<<"line 229: "<<line<<std::endl;
             std::getline(inFile, line);
 
             int col=0;
             int row=0;
             std::vector< std::vector<std::string>> boardVector;
+
+
             while(line[1]==' ' && !inFile.eof()){
               boardVector.push_back(std::vector<std::string>());
-              std::cout<<line<<std::endl;
+            //  std::cout<<"lin 237: " <<line<<std::endl;
 
               if(line[1]==' '){
                 col=0;
@@ -244,24 +246,28 @@ void loadGame(){
                 //splits the hand string into tiles
                 while( boardRow.good() ){
 
-                  std::string tile;
+                  std::string tile="";
                   getline( boardRow, tile, '|' );
                   if(col !=0){
+                  //  std::cout<<"line 252: "<<tile<<std::endl;
                     boardVector[row].push_back( tile );
                   }
 
 
-                  std::cout<<"Tile: "<< tile<<std::endl;
+                ///  std::cout<<"line 254:" <<"Tile: "<< tile<<std::endl;
 
-                  std::cout<< "Col "<< col<<std::endl;
+                //  std::cout<< "line 256:"<<"Col "<< col<<std::endl;
                   col++;
                 }
                 std::getline(inFile, line);
-                std::cout<<line<<std::endl;
+                //std::cout<<"line 260: "<<line<<std::endl;
                 row++;
 
-            }
+              }
 
+            }
+            col-=2;
+            
             //creates board
             Tile*** board= new Tile**[row];
             for(int i = 0; i < row; i++){
@@ -271,7 +277,8 @@ void loadGame(){
             for(int i=0; i<row;i++){
               for(int j=0; j<col; j++){
                 std::string tile=boardVector[i][j];
-                if(tile[0]!=' '){
+                if(tile[0]=='R' || tile[0]=='O' || tile[0]=='Y' || tile[0]=='G' || tile[0]=='B' || tile[0]=='P'){
+                //  std::cout<<"Line: 275: "<<"colour: "<< tile[0]<< ", shape: "<< tile[1]<<std::endl;
                   Colour colour=tile[0];
                   Shape shape =tile[1] -'0';
                   board[i][j]= new Tile(colour, shape);
@@ -280,25 +287,26 @@ void loadGame(){
             }
             tileBoard = new Board(row, col);
             tileBoard->setBoard(board);
+          //  std::cout<<"line 287: print board"<< std::endl;
             tileBoard->printBoard();
 
 
-            }
 
+            item++;
+          }
+          //reading in the Tile Bag
+          if(item==8){
 
-            //reading in the Tile Bag
-          } else if(item==8){
-
-            std::stringstream hand(playerHand);
+            std::stringstream bag(line);
             std::vector<std::string> bagVector;
 
-            while( hand.good() )
+            while( bag.good() )
             {
                 std::string tile;
-                getline( hand, tile, ',' );
+                getline( bag, tile, ',' );
                 bagVector.push_back( tile );
 
-                std::cout<<tile<<std::endl;
+                //std::cout<<"Line 303:"<<tile<<std::endl;
             }
 
             LinkedList* tileBag= new LinkedList();
@@ -312,7 +320,7 @@ void loadGame(){
 
             }
             newBag->setBag(tileBag);
-            newBag->printBag();
+          //  newBag->printBag();
 
             //reading in current player
           } else if(item ==9){
@@ -353,7 +361,7 @@ Player* loadPlayer(std::string playerName, std::string playerScore, std::string 
       getline( hand, tile, ',' );
       playerHandVector.push_back( tile );
 
-      std::cout<<tile<<std::endl;
+    //  std::cout<<"line 357"<<tile<<std::endl;
   }
 
   LinkedList* handList= new LinkedList();
