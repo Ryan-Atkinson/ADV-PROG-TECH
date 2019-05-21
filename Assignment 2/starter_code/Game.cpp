@@ -22,11 +22,16 @@
 Game::Game(Player* player1, Player* player2): player1(player1), player2(player2){
   tileBag= new Bag();
   board= new Board(26,26);
+  currentPlayer= player1->getName();
+  player1->drawTile(tileBag);
+  player2->drawTile(tileBag);
 }
 
-// Game::Game(Player* player1, Player* player2, Bag* bag, Board* board): player1(player1), player2(player2), tileBag(bag), board(board){
-//
-//   }
+Game::Game(Player* player1, Player* player2, Bag* bag, Board* board, Player* currentPlayer): player1(player1), player2(player2), tileBag(bag), board(board){
+  this->currentPlayer=currentPlayer->getName();
+  player1->drawTile(tileBag);
+  player2->drawTile(tileBag);
+  }
 Game::~Game(){
 
 }
@@ -44,12 +49,28 @@ Bag* Game::getTileBag(){
   return this->tileBag;
 }
 
+Player* Game::getOtherPlayer(){
+  Player* player;
+  if(currentPlayer.compare(this->player1->getName())==0){
+    player=this->player2;
+  } else{
+    player=this->player1;
+  }
+
+  return player;
+}
+
 
 bool Game::replaceTile(std::string tile){
   return false;
 }
 
 void Game::changeCurrentPlayer(){
+  if(currentPlayer.compare(this->player1->getName())==0){
+    currentPlayer=player2->getName();
+  } else{
+    currentPlayer=player1->getName();
+  }
 
 }
 
