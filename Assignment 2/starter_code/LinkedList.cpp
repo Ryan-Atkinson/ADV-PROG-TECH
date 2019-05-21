@@ -52,10 +52,12 @@ void LinkedList::deleteAt(int i){
   }
 }
 
+//TODO
 bool LinkedList::contains(Tile data){
   return false;
 }
 
+//TODO
 bool LinkedList::deleteData(Tile data){
   return false;
 }
@@ -155,6 +157,7 @@ int LinkedList::size()
   //assign counter to 0
   int counter =0;
   //create node and point to the head which points to nullptr
+  
   Node* node = head;
   //a while loop to check if note is not equal to nullptr
   while(node!=nullptr)

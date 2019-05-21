@@ -1,6 +1,7 @@
 
 #include "Game.h"
-#include "Board.h"
+#include "TileCodes.h"
+
 #include <iostream>
 
 #include <string>
@@ -28,6 +29,19 @@ Game::Game(Player* player1, Player* player2): player1(player1), player2(player2)
 //   }
 Game::~Game(){
 
+}
+
+Board* Game::getBoard(){
+  return this->board;
+}
+Player* Game::getPlayer1(){
+  return this->player1;
+}
+Player* Game::getPlayer2(){
+  return this->player2;
+}
+Bag* Game::getTileBag(){
+  return this->tileBag;
 }
 
 
@@ -65,9 +79,11 @@ bool Game::addTileToBoard(std::string tile, int tileRow, int tileCol){
   // have to validate this string somewhere
 
   //if this tile is a valid tile
-  if ((tile[0]=='R' || tile[0]=='Y' || tile[0]=='G' || tile[0]=='B' || tile[0]=='P') &&
-  (tile[1]==1 || tile[1]==2 ||  tile[1]==3 ||  tile[1]==4 ||  tile[1]==5 ||  tile[1]==6)){
-    Tile* tilePiece = new Tile(tile[0], tile[1]);
+  int shape = tile[1] -'0';
+
+  if ((tile[0]==RED || tile[0]==ORANGE || tile[0]==YELLOW || tile[0]==GREEN || tile[0]==BLUE || tile[0]==PURPLE) &&
+  (shape==CIRCLE || shape==STAR_4 ||  shape==DIAMOND ||  shape==SQUARE ||  shape==STAR_6 ||  shape==CLOVER)){
+    Tile* tilePiece = new Tile(tile[0], shape);
 
 
 
@@ -198,20 +214,26 @@ bool Game::addTileToBoard(std::string tile, int tileRow, int tileCol){
 
     //if all adjcent tiles are compatable then the piece is added
     if(north && east && south && west && (numNorth+numSouth)<6 && (numEast+numWest)<6){
+      std::cout<<"num west"<<numWest<<std::endl;
+      std::cout<<"num east"<<numEast<<std::endl;
 
+      std::cout<<"num south"<<numSouth<<std::endl;
+      std::cout<<"num north"<<numNorth<<std::endl;
+    //  std::cout<<"num west"<<numWest<<std::endl;
       //finds the total score for this move
       int score= findScore(numNorth, numSouth, numEast, numWest);
 
       //adds the score the current player
       getCurrentPlayer()->addPoints(score);
-
+      std::cout<<"score: "<<score<<std::endl;
 
       //add tile to the board
       this->board->add(tileRow,tileCol, tilePiece);
       tileAdded=true;
 
       //remove tile for players hand
-      getCurrentPlayer()->removeTile(*tilePiece);
+      //currently not working
+      //getCurrentPlayer()->removeTile(*tilePiece);
     } else{
       std::cout<< "Invalid Input: Can't place tile there"<<std::endl;
     }
@@ -237,7 +259,8 @@ int Game::numOfTiles(int tileRow, int tileCol, int direction){
 
   int currRow=tileRow;
   int currCol=tileCol;
-  while(tileBoard[currRow][currCol]!=nullptr && currRow>=0 && currCol>=0 && currRow>maxRow && currCol>maxCol){
+  std::cout<<"Line 262: tileBoard:"<<tileBoard[currRow][currCol]->colour<<std::endl;
+  while(tileBoard[currRow][currCol]!=nullptr && currRow>=0 && currCol>=0 && currRow<maxRow && currCol<maxCol){
 
     numTiles++;
     if(direction==NORTH){
@@ -259,7 +282,7 @@ int Game::numOfTiles(int tileRow, int tileCol, int direction){
 int Game::findScore(int numNorth, int numSouth, int numEast, int numWest){
   int addToScore=0;
   //if there are tiles in some direction
-  if(numNorth<0 || numSouth<0 || numEast<0 || numWest<0){
+  if(numNorth>0 || numSouth>0 || numEast>0 || numWest>0){
 
 
       if((numNorth+numSouth)==5){
@@ -279,20 +302,20 @@ int Game::findScore(int numNorth, int numSouth, int numEast, int numWest){
 
     //finds the number of actual adjcent tiles
     int numAdj=0;
-    if(numNorth<0){
+    if(numNorth>0){
       numAdj++;
     }
-    if (numSouth<0){
+    if (numSouth>0){
       numAdj++;
     }
-    if(numEast<0){
+    if(numEast>0){
       numAdj++;
     }
 
-    if(numWest<0){
+    if(numWest>0){
       numAdj++;
     }
-    if( numAdj<=2){
+    if( numAdj>=2){
       addToScore+=TWO_LINE_SCORE;
     } else{
       addToScore+=ONE_LINE_SCORE;

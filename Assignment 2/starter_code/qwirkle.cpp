@@ -35,9 +35,18 @@ int main() {
    bool gameInProgress = false;
    if(gameInProgress==false)
    {
-     bag->printBag();
-     showMenu();
-     menuOption();
+     Game* game = new Game(new Player("A"), new Player("B"));
+
+     game->addTileToBoard("P1", 2,2);
+     game->addTileToBoard("P2", 2,3);
+     game->addTileToBoard("P2", 2,4);
+     game->addTileToBoard("P2", 2,5);
+     game->addTileToBoard("P2", 2,6);
+     game->addTileToBoard("P2", 2,7);
+     game->addTileToBoard("P2", 2,8);
+     game->getBoard()->printBoard();
+     // showMenu();
+     // menuOption();
      // for(int i =0;i<100;i++){
      //   bag->takeTile();
      //

@@ -1,9 +1,9 @@
-#ifndef ASSIGN2_GAME_H
-#define ASSIGN2_GAME_H
+#ifndef ASSIGN2_GAMEPLAY_H
+#define ASSIGN2_GAMEPLAY_H
 
 #include "Tile.h"
 #include "LinkedList.h"
-#include "Bag.h"
+//#include "Bag.h"
 #include "Board.h"
 #include "Player.h"
 
@@ -25,7 +25,10 @@ public:
   Game(Player* player1, Player* player2, Bag* bag, Board* board);
   ~Game();
 
-
+  Board* getBoard();
+  Player* getPlayer1();
+  Player* getPlayer2();
+  Bag* getTileBag();
   bool replaceTile(std::string tile);
   bool addTileToBoard(std::string tile, int tileRow, int tileCol);
   bool hasGameEnded();
@@ -40,4 +43,4 @@ public:
 
 
 
-#endif // ASSIGN2_GAME_H
+#endif // ASSIGN2_GAMEPLAY_H
