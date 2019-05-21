@@ -1,5 +1,6 @@
 #include "Board.h"
 #include <iostream>
+#include <string>
 
 Board::Board(int row, int col) : row(row), col(col) {
 

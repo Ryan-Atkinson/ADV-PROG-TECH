@@ -62,6 +62,20 @@ Player* Game::getOtherPlayer(){
 
 
 bool Game::replaceTile(std::string tile){
+  char colour =tile[0];
+  int shape=tile[1]-'0';
+  //if it's a valid tile
+  if((colour==RED || colour==ORANGE || colour==YELLOW || colour==GREEN|| colour==BLUE|| colour==PURPLE) &&
+    (shape==CIRCLE || shape==STAR_4 || shape==DIAMOND || shape ==SQUARE || shape== STAR_6 || shape== CLOVER)){
+      Tile* tile= new Tile(colour, shape);
+
+      //checks if the tile is in the places hand
+      bool removed= getCurrentPlayer()->removeTile(tile);
+      if(removed){
+        getCurrentPlayer()->drawTile(tileBag);
+
+      }
+    }
   return false;
 }
 
@@ -89,6 +103,7 @@ bool Game::addTileToBoard(std::string tile, int tileRow, int tileCol){
   bool tileAdded=false;
 
 
+
   //if current player hand has this tile
 
 
@@ -105,7 +120,7 @@ bool Game::addTileToBoard(std::string tile, int tileRow, int tileCol){
   if ((tile[0]==RED || tile[0]==ORANGE || tile[0]==YELLOW || tile[0]==GREEN || tile[0]==BLUE || tile[0]==PURPLE) &&
   (shape==CIRCLE || shape==STAR_4 ||  shape==DIAMOND ||  shape==SQUARE ||  shape==STAR_6 ||  shape==CLOVER)){
     Tile* tilePiece = new Tile(tile[0], shape);
-
+    if(getCurrentPlayer()->hasTile(tilePiece)){
 
 
     Tile*** tileBoard = this->board->getBoard();
@@ -252,9 +267,9 @@ bool Game::addTileToBoard(std::string tile, int tileRow, int tileCol){
       this->board->add(tileRow,tileCol, tilePiece);
       tileAdded=true;
 
-      //remove tile for players hand
-      //currently not working
-      //getCurrentPlayer()->removeTile(*tilePiece);
+
+      getCurrentPlayer()->removeTile(tilePiece);
+      getCurrentPlayer()->drawTile(this->tileBag);
     } else{
       std::cout<< "Invalid Input: Can't place tile there"<<std::endl;
     }
@@ -262,7 +277,9 @@ bool Game::addTileToBoard(std::string tile, int tileRow, int tileCol){
   } else{
     std::cout<<"Invalid Input: That cell isn't avaliable"<<std::endl;
   }
-
+} else{
+  std::cout<<"Player doesn't have this piece"<<std::endl;
+}
   } else{
     std::cout<<"Invalid Input: Tile doesn't exist"<<std::endl;
   }
@@ -348,6 +365,10 @@ int Game::findScore(int numNorth, int numSouth, int numEast, int numWest){
 
 
 bool Game::hasGameEnded(){
-  return false;
+  bool gameEnd= false;
+  if(tileBag->size()==0 && player1->getHandSize()==0 && player2->getHandSize()==0){
+    gameEnd=true;
+  }
+  return gameEnd;
 
 }

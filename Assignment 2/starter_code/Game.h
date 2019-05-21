@@ -6,13 +6,14 @@
 //#include "Bag.h"
 #include "Board.h"
 #include "Player.h"
+#include <string>
 
 
 class Game{
   private:
-    Bag* tileBag;
     Player* player1;
     Player* player2;
+    Bag* tileBag;
     Board* board;
     std::string currentPlayer;
 
@@ -22,7 +23,7 @@ public:
   Game(Player* player1, Player* player2);
 
   //this is for loading in the game
-  Game(Player* player1, Player* player2, Bag* bag, Board* board);
+  Game(Player* player1, Player* player2, Bag* bag, Board* board, Player* currentPlayer);
   ~Game();
 
   Board* getBoard();
@@ -37,6 +38,7 @@ public:
   void hangeCurrentPlayer();
   Player* getCurrentPlayer();
   int numOfTiles(int tileRow, int tileCol, int direction);
+  Player* getOtherPlayer();
 
 
 };

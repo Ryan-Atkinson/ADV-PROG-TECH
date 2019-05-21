@@ -28,31 +28,34 @@ void showInfo();
 bool validateName(const std::string& playerName);
 Player* loadPlayer(std::string playerName, std::string playerScore, std::string playerHand);
 void startNewGame(std::string playerName1, std::string playerName2);
+void startLoadedGame(Player* player1, Player* player2, Bag* bag, Board* board, Player* currPlayer);
+void startGame(Game* game);
 
 
 int main() {
+
    LinkedList* list = new LinkedList();
    Bag* bag = new Bag();
    bool gameInProgress = false;
    if(gameInProgress==false)
    {
-     Game* game = new Game(new Player("A"), new Player("B"));
-
-     game->addTileToBoard("P1", 2,2);
-     game->addTileToBoard("P2", 2,3);
-     game->addTileToBoard("P2", 2,4);
-     game->addTileToBoard("P2", 2,5);
-     game->addTileToBoard("P2", 2,6);
-     game->addTileToBoard("P2", 2,7);
-     game->addTileToBoard("P2", 2,8);
-     game->getBoard()->printBoard();
-
-     Tile * tile1 =new Tile('P', 1);
-     list->addBack(tile1);
-     list->contains(new Tile('P', 1));
-     list->deleteData(new Tile('P', 1));
-     // showMenu();
-     // menuOption();
+     // Game* game = new Game(new Player("A"), new Player("B"));
+     //
+     // game->addTileToBoard("P1", 2,2);
+     // game->addTileToBoard("P2", 2,3);
+     // game->addTileToBoard("P2", 2,4);
+     // game->addTileToBoard("P2", 2,5);
+     // game->addTileToBoard("P2", 2,6);
+     // game->addTileToBoard("P2", 2,7);
+     // game->addTileToBoard("P2", 2,8);
+     // game->getBoard()->printBoard();
+     //
+     // Tile * tile1 =new Tile('P', 1);
+     // list->addBack(tile1);
+     // list->contains(new Tile('P', 1));
+     // list->deleteData(new Tile('P', 1));
+     showMenu();
+     menuOption();
      // for(int i =0;i<100;i++){
      //   bag->takeTile();
      //
@@ -94,12 +97,12 @@ void startNewGame(std::string playerName1, std::string playerName2){
 
 void startLoadedGame(Player* player1, Player* player2, Bag* bag, Board* board, Player* currPlayer){
   Game* game = new Game(player1, player2, bag, board, currPlayer);
-  start(game);
+  startGame(game);
 
 }
 
 void startGame(Game* game){
-  bool playingGame=true
+  bool playingGame=true;
 
   while(playingGame){
     Player* currentPlayer =game->getCurrentPlayer();
@@ -131,8 +134,9 @@ void startGame(Game* game){
     std::cout<<std::endl;
 
     //deals with user input
-    bool hasInvalidInput=false;
-    while(!hasInvalidInput){
+    bool hasValidInput=false;
+    std::string input="";
+    while(!hasValidInput){
       std::cout<<"> ";
       std::cin >> input;
       if(std::cin.eof()){
@@ -142,48 +146,66 @@ void startGame(Game* game){
 
       std::stringstream userInput(input);
       //splits the hand string into tiles
-      int index=0;
+
       int foundInput=false;
       while( userInput.good() && !foundInput){
 
         std::string word="";
-        getline( input, word, " " );
+
+        getline( userInput, word );
         std::cout<<"Word: "<< word<<std::endl;
-        if(word.compare("replace")==0 ||){
-          getline( input, word, " " );
-          int shape= word[1]-'0';
+        if(word.compare("replace")==0){
+          if(userInput.good()){
+          getline( userInput, word );
 
-          //if it's a valid tile
-          if(word[0]==RED || word[0]==ORANGE || word[0]==YELLOW || word[0]==GREEN|| word[0]==BLUE|| word[0]==PURPLE &&
-            shape==CIRCLE || shape==STAR_4 || shape==DIAMOND || shape ==SQUARE || shape== STAR_6 || shape== CLOVER){
-              Tile* tile= new Tile(word[0], shape);
-              bool removed= currentPlayer->removeTile(tile);
-              if(removed){
-                currentPlayer->drawTile();
-              }
-              foundInput=true;
-
+          bool replaced= game->replaceTile(word);
+          hasValidInput =replaced;
+          }
+          foundInput=true;
+        } else if (word.compare("place")){
+          std::string tile="";
+          if(userInput.good()){
+              getline( userInput, word );
+              tile=word;
+          }
+          if(userInput.good()){
+              getline( userInput, word);
 
           }
+          if(userInput.good()){
+              getline( userInput, word);
+              int row=word[0]-65;
+              int col =word[1]-'0';
+              game->addTileToBoard(tile, row, col);
+              hasValidInput=true;
+          }
+          foundInput=true;
+        } else if(word.compare("save")) {
+          //TODO
 
-        } else if (word.compare("place") ||){
-          index=2
+          foundInput=true;
         }
-        //  std::cout<<"line 252: "<<tile<<std::endl;
-          boardVector[row].push_back( tile );
+        else {
+          std::cout<<"Input is Invalid, try place or replace at tile"<<std::endl;
+          foundInput=true;
         }
+
+
+      }
+      if(!hasValidInput){
+        std::cout<<"Please type valid input"<<std::endl;
+      }
 
     }
-
-
-
-
     playingGame = !game->hasGameEnded();
     game->changeCurrentPlayer();
 
   }
+  std::cout<<"Game has ended"<<std::endl;
 
 }
+
+
 
 void showMenu(){
   std::cout<<"\n";
@@ -276,6 +298,8 @@ void newGame(){
     std::cout << "Let's Play!" << "\n";
     std::cout <<"<normal gameplay continues from here>" <<"\n";
   }
+
+  startNewGame(playerName1, playerName2);
 }
 
 
@@ -304,8 +328,9 @@ void loadGame(){
       std::string playerName;
       std::string playerScore;
       std::string playerHand;
-      std::string currentPlayer;
+
       std::string line;
+      Player* currentPlayer=nullptr;
        while (!inFile.eof()) {
            std::getline(inFile, line);
 
@@ -439,21 +464,26 @@ void loadGame(){
 
             //reading in current player
           } else if(item ==9){
-            currentPlayer=line;
+            currentPlayer=player1;
+            if(player1->getName().compare(line)==0){
+              currentPlayer=player1;
+            } else{
+              currentPlayer=player2;
+            }
 
           }
-
-
-
           item++;
-
        }
+       startLoadedGame(player1, player2, newBag, tileBoard, currentPlayer );
     } else{
       std::cout<<"Invalid File"<<std::endl;
 
       showMenu();
       menuOption();
     }
+
+
+
   }
 
   // board();

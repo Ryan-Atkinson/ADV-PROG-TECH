@@ -5,6 +5,7 @@
 
 Player::Player(std::string name) {
   this->name = name;
+  this->hand= new LinkedList();
   score = 0;
 
 }
