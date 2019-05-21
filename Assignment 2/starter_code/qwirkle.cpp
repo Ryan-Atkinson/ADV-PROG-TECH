@@ -19,6 +19,11 @@
 
 #define EXIT_SUCCESS    0
 
+#define USER_REPLACE 1
+#define USER_PLACE 2
+#define USER_SAVE 3
+
+
 
 bool menuOption();
 void showMenu();
@@ -148,37 +153,44 @@ void startGame(Game* game){
       //splits the hand string into tiles
 
       int foundInput=false;
-      while( userInput.good() && !foundInput){
+      int inputType=0;
+      int counter=0;
+      while( userInput.good() || !foundInput){
 
         std::string word="";
 
         getline( userInput, word );
-        std::cout<<"Word: "<< word<<std::endl;
-        if(word.compare("replace")==0){
-          if(userInput.good()){
-          getline( userInput, word );
+        std::cout<<"Line 163: Word: "<< word<<std::endl;
+        if(word.compare("replace")==0|| inputType==USER_REPLACE){
+          inputType=USER_REPLACE;
+          if(counter==1){
+            bool replaced= game->replaceTile(word);
+            if(replaced){
+              hasValidInput =replaced;
+            }
 
-          bool replaced= game->replaceTile(word);
-          hasValidInput =replaced;
+            foundInput=true;
           }
-          foundInput=true;
-        } else if (word.compare("place")){
+
+        } else if (word.compare("place")==0 || inputType== USER_PLACE){
+          std::cout<<"Line 167: Compare: "<< word.compare("place")<<std::endl;
           std::string tile="";
-          if(userInput.good()){
-              getline( userInput, word );
-              tile=word;
-          }
-          if(userInput.good()){
-              getline( userInput, word);
 
+
+
+          tile=word;
+          std::cout<<"Line 173: Tile: "<<tile<<std::endl;
+
+
+
+          int row=word[0]-65;
+          int col =word[1]-'0';
+          bool isValid=game->addTileToBoard(tile, row, col);
+          if(isValid){
+            hasValidInput=true;
           }
-          if(userInput.good()){
-              getline( userInput, word);
-              int row=word[0]-65;
-              int col =word[1]-'0';
-              game->addTileToBoard(tile, row, col);
-              hasValidInput=true;
-          }
+
+
           foundInput=true;
         } else if(word.compare("save")) {
           //TODO
