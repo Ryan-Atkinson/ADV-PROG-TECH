@@ -23,7 +23,7 @@ void LinkedList::deleteFront()
   delete toDelete;
 }
 
-void LinkedList::deleteAt(int i){
+void LinkedList::deleteAt(int i) {
   Node* current=head;
   Node* previous = nullptr;
   int index=0;
@@ -52,11 +52,11 @@ void LinkedList::deleteAt(int i){
   }
 }
 
-bool LinkedList::contains(Tile data){
+bool LinkedList::contains(Tile data) {
   return false;
 }
 
-bool LinkedList::deleteData(Tile data){
+bool LinkedList::deleteData(Tile data) {
   return false;
 }
 
@@ -86,13 +86,13 @@ void LinkedList::deleteBack()
 
 
 
-void LinkedList::addFront(Tile* tile){
+void LinkedList::addFront(Tile* tile) {
   Node* newNode = new Node(tile, this->head);
   this->head = newNode;
 
 }
 
-void LinkedList::addBack(Tile* tile){
+void LinkedList::addBack(Tile* tile) {
   Node* newNode = new Node(tile, nullptr);
 
 
@@ -120,7 +120,7 @@ void LinkedList::addBack(Tile* tile){
 }
 
 //gets data at an index
-Tile* LinkedList::get(int i){
+Tile* LinkedList::get(int i) {
 
   int index=0;
   Node* current=head;
@@ -137,7 +137,7 @@ Tile* LinkedList::get(int i){
 }
 
 //add a node at an index
-void LinkedList::addAt(int i, Tile* data){
+void LinkedList::addAt(int i, Tile* data) {
   Node* current=head;
   int index=0;
   while(current!=nullptr && index+1<i){
@@ -185,4 +185,13 @@ void LinkedList::clear()
   }
   //after deleting the node the head will need to point to nullptr
   head = nullptr;
+}
+
+void LinkedList::print(Node *head) {
+  if(head == nullptr) {
+    std::cout << "nullptr" << endl;
+  }
+  else {
+    std::cout << head->tile << endl;
+  }
 }

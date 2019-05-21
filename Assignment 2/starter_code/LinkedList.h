@@ -28,8 +28,7 @@ class LinkedList {
 
     bool deleteData(Tile data);
 
-
-
+    void print(Node *head);
 
   private:
     Node* head;

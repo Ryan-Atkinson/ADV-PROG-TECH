@@ -8,10 +8,8 @@
 Player::Player(std::string name) {
   this->name = name;
   score = 0;
-
 }
 
-//returns the player's score
 int Player::getScore() {
   return score;
 }
@@ -62,8 +60,8 @@ void Player::drawTile(Bag* bag) {
   }
 }
 
-bool Player::hasTile(Tile t) {
-  return hand->contains(t);
+bool Player::hasTile(Tile i) {
+  return hand->contains(i);
 }
 
 void Player::setHand(LinkedList* list){
