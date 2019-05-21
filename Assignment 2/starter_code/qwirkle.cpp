@@ -6,6 +6,7 @@
 #include "LinkedList.h"
 #include "Board.h"
 #include "Player.h"
+#include "Game.h"
 
 
 #include <iostream>
@@ -267,7 +268,7 @@ void loadGame(){
 
             }
             col-=2;
-            
+
             //creates board
             Tile*** board= new Tile**[row];
             for(int i = 0; i < row; i++){

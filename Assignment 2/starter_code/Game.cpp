@@ -1,12 +1,16 @@
 
 #include "Game.h"
+#include "Board.h"
+#include <iostream>
+
+#include <string>
 
 
 //defineing constant scores
 
 #define TWO_LINE_SCORE 2
 #define ONE_LINE_SCORE 1
-#define QWRIKLE_SCORE 6
+#define QWIRKLE_SCORE 6
 #define NORTH 1
 #define EAST 2
 #define SOUTH 3
@@ -14,29 +18,31 @@
 
 
 
-Game(Player* player1, Player* player2): player1(player1), player2(player2){
+Game::Game(Player* player1, Player* player2): player1(player1), player2(player2){
   tileBag= new Bag();
   board= new Board(26,26);
 }
-~Game(){
+
+// Game::Game(Player* player1, Player* player2, Bag* bag, Board* board): player1(player1), player2(player2), tileBag(bag), board(board){
+//
+//   }
+Game::~Game(){
 
 }
 
-void addPlayer(Player* player){
 
-}
-bool replaceTile(std::string tile){
-
+bool Game::replaceTile(std::string tile){
+  return false;
 }
 
-void changeCurrentPlayer(){
+void Game::changeCurrentPlayer(){
 
 }
 
-Player* getCurrentPlayer(){
+Player* Game::getCurrentPlayer(){
   Player* player;
   if(currentPlayer.compare(this->player1->getName())==0){
-    player=this->player1
+    player=this->player1;
   } else{
     player=this->player2;
   }
@@ -44,8 +50,10 @@ Player* getCurrentPlayer(){
   return player;
 }
 
-bool addTileToBoard(std::string tile, int tileRow, int tileCol){
-    bool tileAdded=false;
+bool Game::addTileToBoard(std::string tile, int tileRow, int tileCol){
+  bool tileAdded=false;
+
+
   //if current player hand has this tile
 
 
@@ -59,11 +67,11 @@ bool addTileToBoard(std::string tile, int tileRow, int tileCol){
   //if this tile is a valid tile
   if ((tile[0]=='R' || tile[0]=='Y' || tile[0]=='G' || tile[0]=='B' || tile[0]=='P') &&
   (tile[1]==1 || tile[1]==2 ||  tile[1]==3 ||  tile[1]==4 ||  tile[1]==5 ||  tile[1]==6)){
-    Tile tilePiece = new Tile(tile[0], tile[1]);
+    Tile* tilePiece = new Tile(tile[0], tile[1]);
 
 
 
-    Tile*** tileBoard = this->board->getBoard;
+    Tile*** tileBoard = this->board->getBoard();
 
     int maxRow =this->board->getMaxRow();
     int maxCol=this->board->getMaxCol();
@@ -71,7 +79,7 @@ bool addTileToBoard(std::string tile, int tileRow, int tileCol){
 
 
   //checks to see if the row and column are validate on the board
-  if(tileRow>=0 && tileRow<maxRow && tileCol>=0 && tileCol<maxCol && tileBoard[tileRow][TileCol]==nullptr){
+  if(tileRow>=0 && tileRow<maxRow && tileCol>=0 && tileCol<maxCol && tileBoard[tileRow][tileCol]==nullptr){
 
 
     //are the tiles in these ceels compatable with the current tile
@@ -92,28 +100,24 @@ bool addTileToBoard(std::string tile, int tileRow, int tileCol){
 
       //if a tile exists in the north
       if(tileBoard[tileRow-1][tileCol]!=nullptr){
-        if (tileBoard[tileRow-1][tileCol]->colour ==piece->colour
-          || tileBoard[tileRow-1][tileCol]->shape ==piece->shape){
+        if (tileBoard[tileRow-1][tileCol]->colour ==tilePiece->colour
+          || tileBoard[tileRow-1][tileCol]->shape ==tilePiece->shape){
+
             north=true;
+
           //checks if there is 6 tiles in this direction
-          int currRow=row-1;
-          int currCol=tileCol;
-
-          while(tileBoard[currRow][currCol]!=nullptr &&
-            currRow>=0 && currCol>=0 && currRow>maxRow && curCol>maxCol && numNorth<6){
-
-            numNorth++;
-            currRow--;
-          }
+          numNorth= numOfTiles(tileRow-1, tileCol, NORTH);
 
           //there is a qwirkle in north direction so a piece can be placed there
-          if(numNorth=>6){
+          if(numNorth>=6){
             north=false;
           }
 
-        } else{
-          north=true;
         }
+
+      //there is a nullptr, so the tile is empty
+      }else{
+        north=true;
       }
     }
 
@@ -123,26 +127,21 @@ bool addTileToBoard(std::string tile, int tileRow, int tileCol){
     if(tileRow<maxRow && north){
 
       if(tileBoard[tileRow+1][tileCol]!=nullptr){
-      if (tileBoard[tileRow+1][tileCol]->colour ==piece->colour
-         || tileBoard[tileRow+1][tileCol]->shape ==piece->shape){
-           south=true;
+        if (tileBoard[tileRow+1][tileCol]->colour ==tilePiece->colour
+          || tileBoard[tileRow+1][tileCol]->shape ==tilePiece->shape){
+             //adjcent tile is compatable with current tile
+             south=true;
 
-           //checks if there is 6 tiles in this direction
-           int numEast= numOfTiles(tileRow+1, tileCol, SOUTH);
-           int currRow=row+1;
-           int currCol=tileCol;
-           while(tileBoard[currRow][currCol]!=nullptr &&
-             currRow>=0 && currCol>=0 && currRow>maxRow && curCol>maxCol && numNorth<6){
+             //checks if there is 6 tiles in this direction
+             numSouth= numOfTiles(tileRow+1, tileCol, SOUTH);
 
-             numSouth++;
-             currRow++;
+             //there is a qwirkle in south direction so a piece can be placed there
+             if(numSouth>=6){
+               south=false;
+             }
            }
 
-           //there is a qwirkle in south direction so a piece can be placed there
-           if(numSouth=>6){
-             south=false;
-           }
-         }
+         //if there is a nullptr
        } else{
          south=true;
        }
@@ -151,19 +150,23 @@ bool addTileToBoard(std::string tile, int tileRow, int tileCol){
 
     //if this piece is not against the east border
     if(tileCol<maxCol && south && north){
-        //if piece is compatable with the adjcent east tile
-        if(tileBoard[tileRow][tileCol+1]!=nullptr){
-        if (tileBoard[tileRow][tileCol+1]->colour ==piece->colour
-         || tileBoard[tileRow][tileCol+1]->shape ==piece->shape){
-           east=true;
-           //checks if there is 6 tiles in this direction
+      //if piece is compatable with the adjcent east tile
+      if(tileBoard[tileRow][tileCol+1]!=nullptr){
+        if (tileBoard[tileRow][tileCol+1]->colour ==tilePiece->colour
+          || tileBoard[tileRow][tileCol+1]->shape ==tilePiece->shape){
+             // //adjcent tile is compatable with current tile
+             east=true;
 
-            int numEast= numOfTiles(tileRow, tileCol+1, EAST);
-           //there is a qwirkle in south direction so a piece can be placed there
-           if(numEast=>6){
-             east=false;
-           }
-      }
+             //checks if there is 6 tiles in this direction
+              numEast= numOfTiles(tileRow, tileCol+1, EAST);
+
+             //there is a qwirkle in south direction so a piece can't be placed there
+             if(numEast>=6){
+               east=false;
+         }
+       }
+
+      //if there is a nullptr
     } else{
       east=true;
     }
@@ -173,18 +176,20 @@ bool addTileToBoard(std::string tile, int tileRow, int tileCol){
     if(tileCol>0 && east && north && south ){
         //if piece is compatable with the adjcent west tile
         if(tileBoard[tileRow][tileCol-1]!=nullptr){
-       if (tileBoard[tileRow][tileCol-1]->colour ==piece->colour
-        || tileBoard[tileRow][tileCol-1]->shape ==piece->shape){
-          west=true;
+          if (tileBoard[tileRow][tileCol-1]->colour ==tilePiece->colour
+            || tileBoard[tileRow][tileCol-1]->shape ==tilePiece->shape){
+              west=true;
 
-           //checks if there is 6 tiles in this direction
-           int numWest= numOfTiles(tileRow, tileCol-1, WEST);
+               //checks if there is 6 tiles in this direction
+               numWest= numOfTiles(tileRow, tileCol-1, WEST);
 
-           //there is a qwirkle in west direction so a piece can be placed there
-           if(numWest=>6){
-             west=false;
+               //there is a qwirkle in west direction so a piece can't be placed there
+               if(numWest>=6){
+                 west=false;
            }
         }
+
+        //if there is a nullptr
       } else{
         west=true;
       }
@@ -192,19 +197,29 @@ bool addTileToBoard(std::string tile, int tileRow, int tileCol){
     }
 
     //if all adjcent tiles are compatable then the piece is added
-    if(north && east && south && west && && (numNorth+numSouth)<6 && (numEast+numWest)<6)){
+    if(north && east && south && west && (numNorth+numSouth)<6 && (numEast+numWest)<6){
+
+      //finds the total score for this move
       int score= findScore(numNorth, numSouth, numEast, numWest);
+
+      //adds the score the current player
       getCurrentPlayer()->addPoints(score);
+
+
+      //add tile to the board
+      this->board->add(tileRow,tileCol, tilePiece);
       tileAdded=true;
-      this->board->add(tileRow,tileMax, tilePiece);
-      getCurrentPlayer()->removeTile(tilePiece);
+
+      //remove tile for players hand
+      getCurrentPlayer()->removeTile(*tilePiece);
     } else{
-      std::cout<< "Invalid Input: Can't place tile there"
+      std::cout<< "Invalid Input: Can't place tile there"<<std::endl;
     }
 
   } else{
     std::cout<<"Invalid Input: That cell isn't avaliable"<<std::endl;
   }
+
   } else{
     std::cout<<"Invalid Input: Tile doesn't exist"<<std::endl;
   }
@@ -212,22 +227,21 @@ bool addTileToBoard(std::string tile, int tileRow, int tileCol){
   return tileAdded;
 }
 
-int numOfTiles(int tileRow, int tileCol, int direction){
+int Game::numOfTiles(int tileRow, int tileCol, int direction){
   int numTiles=0;
 
-  Tile*** tileBoard = this->board->getBoard;
+  Tile*** tileBoard = this->board->getBoard();
 
   int maxRow =this->board->getMaxRow();
   int maxCol=this->board->getMaxCol();
 
   int currRow=tileRow;
   int currCol=tileCol;
-  while(tileBoard[currRow][currCol]!=nullptr &&
-    currRow>=0 && currCol>=0 && currRow>maxRow && curCol>maxCol && numNorth<6){
+  while(tileBoard[currRow][currCol]!=nullptr && currRow>=0 && currCol>=0 && currRow>maxRow && currCol>maxCol){
 
     numTiles++;
     if(direction==NORTH){
-      curRow--;
+      currRow--;
     } else if (direction==EAST){
       currCol++;
 
@@ -240,12 +254,9 @@ int numOfTiles(int tileRow, int tileCol, int direction){
 
   }
   return numTiles;
-
-
-
 }
 
-int findScore(int numNorth, int numSouth, int numEast, int numWest){
+int Game::findScore(int numNorth, int numSouth, int numEast, int numWest){
   int addToScore=0;
   //if there are tiles in some direction
   if(numNorth<0 || numSouth<0 || numEast<0 || numWest<0){
@@ -275,7 +286,7 @@ int findScore(int numNorth, int numSouth, int numEast, int numWest){
       numAdj++;
     }
     if(numEast<0){
-      numAdj++
+      numAdj++;
     }
 
     if(numWest<0){
@@ -286,18 +297,13 @@ int findScore(int numNorth, int numSouth, int numEast, int numWest){
     } else{
       addToScore+=ONE_LINE_SCORE;
     }
+  }
 
     return addToScore;
 }
 
 
-int findNumberOfAdjcent(int north, int south, int west, int east){
-
-
-
-}
-
-
-bool hasGameEnded(){
+bool Game::hasGameEnded(){
+  return false;
 
 }
