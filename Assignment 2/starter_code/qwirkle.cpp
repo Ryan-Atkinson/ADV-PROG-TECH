@@ -6,6 +6,7 @@
 #include "LinkedList.h"
 #include "Board.h"
 #include "Player.h"
+#include "Game.h"
 
 
 #include <iostream>
@@ -14,7 +15,6 @@
 
 #include <sstream>
 #include <string>
-
 
 #define EXIT_SUCCESS    0
 
@@ -148,7 +148,8 @@ void newGame(){
   }else
   {
   //while loop to check for validity to player name (name must be uppercase!)
-  while(validateName(playerName1)==false){
+  while(validateName(playerName1)==false)
+  {
     std::cout <<"Uppercase characters only for playername!" <<"\n";
     std::cout<<"> ";
     std::cin >>playerName1;
@@ -156,17 +157,21 @@ void newGame(){
     std::cout << "Enter a name for Player 2 (uppercase characters only): " << "\n";
     std::cout<<"> ";
     std::cin >>playerName2;
-  //while loop to check for validity to player name (name must be uppercase!)
-  while(validateName(playerName2)==false){
-    std::cout <<"Uppercase characters only for playername!" <<"\n";
-    std::cout<<"> ";
-    std::cin >>playerName2;
+
+    //while loop to catch false player names
+    //if statement to catch both player names being the same and player name not being valid
+    while((playerName2==playerName1)||(validateName(playerName2)==false)){
+      std::cout<<"Player name must not be the same or name needs to be uppercase!"<<"\n";
+      std::cout <<"> ";
+      std::cin >> playerName2;
+    }
+
+    if(!std::cin.fail())
+    {
+      std::cout << "Let's Play!" << "\n";
+      std::cout <<"<normal gameplay continues from here>" <<"\n";
+    }
   }
-  if(!std::cin.fail()){
-    std::cout << "Let's Play!" << "\n";
-    std::cout <<"<normal gameplay continues from here>" <<"\n";
-  }
-}
 }
 
 
@@ -377,7 +382,6 @@ Player* loadPlayer(std::string playerName, std::string playerScore, std::string 
     Colour colour=tile[0];
     Shape shape =tile[1] -'0';
     handList->addBack(new Tile(colour, shape));
-
   }
 
   //creates a Player
