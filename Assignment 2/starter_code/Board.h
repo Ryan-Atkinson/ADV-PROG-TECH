@@ -11,6 +11,9 @@ class Board {
     bool add(int row, int col, Tile* piece);
     void printBoard();
 
+    //for loading the board
+    void setBoard(Tile*** board);
+
 
 
 

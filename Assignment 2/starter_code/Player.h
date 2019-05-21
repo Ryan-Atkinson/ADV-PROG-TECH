@@ -1,27 +1,33 @@
 #ifndef ASSIGN2_PLAYER_H
 #define ASSIGN2_PLAYER_H
 
+
+#include "Tile.h"
 #include "LinkedList.h"
 #include <string>
 
 
 class Player {
   private:
-    std::string playerName;
-    int points;
+    std::string name;
+    int score;
     LinkedList* hand;
   public:
-    Player(std::string playerName);
+    Player(std::string name);
     ~Player();
 
+    std::string getName();
 
-    int getPoints();
 
-    //sets the total points
-    void setPoints(int points);
+    int getScore();
 
-    // adds to the current points and then returns the total points
-    int addPoints(int points);
+    //sets the total score
+    void setScore(int i);
+
+    // adds to the current points
+    void addPoints(int i);
+
+    void subtractPoints(int i);
 
     //gets current size of hand
     int getHandSize();
@@ -30,13 +36,18 @@ class Player {
     LinkedList* getHand();
 
     //prints a list of the current hand
-    void listHand();
+    void printHand();
 
     //adds a tile to hand
-    void addTile(Tile* tile);
+    void drawTile(Bag* bag);
 
     // removes a tile for the hand by index of the tile in the linked list
-    void removeTile(int index);
+    void removeTile(Tile i);
+
+    bool hasTile(Tile t);
+
+    //this is used when loading a file to set the hand
+    void setHand(LinkedList* list);
 
 };
 

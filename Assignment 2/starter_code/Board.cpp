@@ -8,6 +8,10 @@ Board::Board(int row, int col) : row(row), col(col) {
     this->board[i] = new Tile*[this->col];
   }
 
+
+
+
+
   // for (int row = 0; row < 6; row++) {
   //   for (int col = 0; col < 6; col++) {
   //     array[row][col] = '  ';
@@ -185,6 +189,10 @@ bool Board::add(int row, int column, Tile* piece) {
   }
 
   return tileAdded;
+}
+
+void Board::setBoard(Tile*** board){
+  this->board=board;
 }
 // Board::Board(const int row,const int col){
 //   const char row = 6;

@@ -19,6 +19,9 @@ class Bag {
     void createBag();
     void printBag();
 
+    //for loading files
+    void setBag(LinkedList* tiles);
+
 
 };
 

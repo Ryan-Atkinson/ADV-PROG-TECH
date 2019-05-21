@@ -52,11 +52,13 @@ void LinkedList::deleteAt(int i){
   }
 }
 
+bool LinkedList::contains(Tile data){
+  return false;
+}
 
-
-
-
-
+bool LinkedList::deleteData(Tile data){
+  return false;
+}
 
 void LinkedList::deleteBack()
 {
