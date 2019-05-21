@@ -142,7 +142,7 @@ void newGame(){
   std::cout<<"> ";
   //player 1 name input
   std::cin >>playerName1;
-  //checks if input has EOF character (^D) and exits from program 
+  //looks for EOF characters in input cin and exists program
   if(std::cin.eof()){
     std::cout<<"Goodbye"<<"\n";
   }else

@@ -13,6 +13,10 @@ class Board {
 
     //for loading the board
     void setBoard(Tile*** board);
+    Tile*** getBoard();
+
+    int getMaxRow();
+    int getMaxCol();
 
 
 

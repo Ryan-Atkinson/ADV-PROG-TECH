@@ -76,6 +76,15 @@ void Board::printBoard(){
 
 }
 
+int getMaxRow(){
+  return this->row;
+}
+
+int getMaxCol(){
+  return this->col;
+}
+
+
 //checks if the cell can be added to the board
 
 bool Board::add(int row, int column, Tile* piece) {
@@ -193,6 +202,10 @@ bool Board::add(int row, int column, Tile* piece) {
 
 void Board::setBoard(Tile*** board){
   this->board=board;
+}
+
+Tile*** Board::getBoard(){
+  return this->board;
 }
 // Board::Board(const int row,const int col){
 //   const char row = 6;
