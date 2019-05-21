@@ -25,7 +25,10 @@ public:
   Game(Player* player1, Player* player2, Bag* bag, Board* board);
   ~Game();
 
-
+  Board* getBoard();
+  Player* getPlayer1();
+  Player* getPlayer2();
+  Bag* getTileBag();
   bool replaceTile(std::string tile);
   bool addTileToBoard(std::string tile, int tileRow, int tileCol);
   bool hasGameEnded();

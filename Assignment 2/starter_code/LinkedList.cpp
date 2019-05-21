@@ -36,29 +36,75 @@ void LinkedList::deleteAt(int i) {
 
       current=current->next;
       index++;
-    //  std::cout<<" LinkedList index: "<< index<<std::endl;
+
     }
     if(current->next == nullptr){
       previous->next=nullptr;
       delete current;
-      //std::cout<<" deleted 1 "<< index<<std::endl;
+
     } else{
       previous->next=current->next;
 
 
-      //std::cout<<" deleted 2 index: "<< index<< " colour: " << current->tile->colour <<" shape: "<< current->tile->shape << std::endl;
+
       delete current;
     }
   }
 }
 
-bool LinkedList::contains(Tile data) {
-  return false;
+//finds if the list contains a file
+bool LinkedList::contains(Tile* data){
+  bool containsTile=false;
+
+  if(this->head!=nullptr){
+    Node* current =this->head;
+    while(current!=nullptr && !containsTile){
+
+      //if the tiles are the same
+      if(current->tile->colour==data->colour && current->tile->shape==data->shape){
+        containsTile=true;
+      }
+    }
+  }
+  return containsTile;
 }
 
-bool LinkedList::deleteData(Tile data) {
-  return false;
+//deletes a certain tile from the linked list
+bool LinkedList::deleteData(Tile* data){
+  bool deleted = false;
+
+  if(head !=nullptr && contains(data)){
+    Node* current=head;
+    Node* previous = nullptr;
+
+    if(current->tile->colour==data->colour && current->tile->shape==data->shape){
+      delete current;
+      head=nullptr;
+    } else{
+      bool found = false;
+      while(current!=nullptr && !found){
+        if(current->tile->colour==data->colour && current->tile->shape==data->shape){
+          found=true;
+        } else{
+          previous=current;
+          current=current->next;
+        }
+      }
+      if(current->next == nullptr){
+        previous->next=nullptr;
+        delete current;
+        deleted=true;
+
+      } else{
+        previous->next=current->next;
+        delete current;
+        deleted=true;
+      }
+    }
+  }
+  return deleted;
 }
+
 
 void LinkedList::deleteBack()
 {
@@ -132,7 +178,7 @@ Tile* LinkedList::get(int i) {
     }
   }
 
-  //std::cout<<"Get at index: "<< index<< " tile: colour "<< current->tile->colour<<" shape: "<<current->tile->shape<<std::endl;
+
   return current->tile;
 }
 
@@ -155,15 +201,18 @@ int LinkedList::size()
   //assign counter to 0
   int counter =0;
   //create node and point to the head which points to nullptr
-  Node* node = head;
-  //a while loop to check if note is not equal to nullptr
-  while(node!=nullptr)
-  {
-    //iterating through the nodes with a counter from 0
-    ++counter;
-    //assign node to the next node
-    node = node->next;
+  if(head!=nullptr){
+    Node* node = head;
+    //a while loop to check if note is not equal to nullptr
+    while(node!=nullptr)
+    {
+      //iterating through the nodes with a counter from 0
+      ++counter;
+      //assign node to the next node
+      node = node->next;
+    }
   }
+
   //returns counter which is the number of elements in the LinkedList
   return counter;
 }

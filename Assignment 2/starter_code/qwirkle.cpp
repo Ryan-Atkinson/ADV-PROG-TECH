@@ -16,6 +16,7 @@
 #include <sstream>
 #include <string>
 
+
 #define EXIT_SUCCESS    0
 
 
@@ -26,6 +27,7 @@ void loadGame();
 void showInfo();
 bool validateName(const std::string& playerName);
 Player* loadPlayer(std::string playerName, std::string playerScore, std::string playerHand);
+void startNewGame(std::string playerName1, std::string playerName2);
 
 
 int main() {
@@ -34,9 +36,23 @@ int main() {
    bool gameInProgress = false;
    if(gameInProgress==false)
    {
-     bag->printBag();
-     showMenu();
-     menuOption();
+     Game* game = new Game(new Player("A"), new Player("B"));
+
+     game->addTileToBoard("P1", 2,2);
+     game->addTileToBoard("P2", 2,3);
+     game->addTileToBoard("P2", 2,4);
+     game->addTileToBoard("P2", 2,5);
+     game->addTileToBoard("P2", 2,6);
+     game->addTileToBoard("P2", 2,7);
+     game->addTileToBoard("P2", 2,8);
+     game->getBoard()->printBoard();
+
+     Tile * tile1 =new Tile('P', 1);
+     list->addBack(tile1);
+     list->contains(new Tile('P', 1));
+     list->deleteData(new Tile('P', 1));
+     // showMenu();
+     // menuOption();
      // for(int i =0;i<100;i++){
      //   bag->takeTile();
      //
@@ -68,7 +84,106 @@ int main() {
    return EXIT_SUCCESS;
 }
 
+void startNewGame(std::string playerName1, std::string playerName2){
+  Player* player1 = new Player(playerName1);
+  Player* player2 = new Player(playerName2);
 
+  Game* game= new Game(player1, player2);
+  startGame(game);
+}
+
+void startLoadedGame(Player* player1, Player* player2, Bag* bag, Board* board, Player* currPlayer){
+  Game* game = new Game(player1, player2, bag, board, currPlayer);
+  start(game);
+
+}
+
+void startGame(Game* game){
+  bool playingGame=true
+
+  while(playingGame){
+    Player* currentPlayer =game->getCurrentPlayer();
+    std::cout<<std::endl;
+
+    // prints name
+    std::cout<<currentPlayer->getName()<<" , it's your turn"<<std::endl;
+
+    //prints scores
+    std::cout<<"Score for A: "<<currentPlayer->getScore()<<std::endl;
+    std::cout<<"Score for B: "<<currentPlayer->getScore()<<std::endl;
+    std::cout<<std::endl;
+
+    //prints board
+    game->getBoard()->printBoard();
+
+    //prints hand
+    std::cout<<"Your hand is"<<std::endl;
+    LinkedList* hand=currentPlayer->getHand();
+
+
+    int index=0;
+    while(index<hand->size()){
+      Tile* tile = hand->get(index);
+      std::cout <<tile->colour<< tile->shape<<",";
+      index++;
+    }
+    std::cout<<std::endl;
+    std::cout<<std::endl;
+
+    //deals with user input
+    bool hasInvalidInput=false;
+    while(!hasInvalidInput){
+      std::cout<<"> ";
+      std::cin >> input;
+      if(std::cin.eof()){
+        std::cout<<"Goodbye"<<"\n";
+        exit(0);
+      }
+
+      std::stringstream userInput(input);
+      //splits the hand string into tiles
+      int index=0;
+      int foundInput=false;
+      while( userInput.good() && !foundInput){
+
+        std::string word="";
+        getline( input, word, " " );
+        std::cout<<"Word: "<< word<<std::endl;
+        if(word.compare("replace")==0 ||){
+          getline( input, word, " " );
+          int shape= word[1]-'0';
+
+          //if it's a valid tile
+          if(word[0]==RED || word[0]==ORANGE || word[0]==YELLOW || word[0]==GREEN|| word[0]==BLUE|| word[0]==PURPLE &&
+            shape==CIRCLE || shape==STAR_4 || shape==DIAMOND || shape ==SQUARE || shape== STAR_6 || shape== CLOVER){
+              Tile* tile= new Tile(word[0], shape);
+              bool removed= currentPlayer->removeTile(tile);
+              if(removed){
+                currentPlayer->drawTile();
+              }
+              foundInput=true;
+
+
+          }
+
+        } else if (word.compare("place") ||){
+          index=2
+        }
+        //  std::cout<<"line 252: "<<tile<<std::endl;
+          boardVector[row].push_back( tile );
+        }
+
+    }
+
+
+
+
+    playingGame = !game->hasGameEnded();
+    game->changeCurrentPlayer();
+
+  }
+
+}
 
 void showMenu(){
   std::cout<<"\n";
@@ -382,6 +497,7 @@ Player* loadPlayer(std::string playerName, std::string playerScore, std::string 
     Colour colour=tile[0];
     Shape shape =tile[1] -'0';
     handList->addBack(new Tile(colour, shape));
+
   }
 
   //creates a Player

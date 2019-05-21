@@ -1,15 +1,15 @@
 #include <iostream>
 #include <string>
 #include "Player.h"
-#include "Bag.h"
-#include "LinkedList.h"
 
 
 Player::Player(std::string name) {
   this->name = name;
   score = 0;
+
 }
 
+//returns the player's score
 int Player::getScore() {
   return score;
 }
@@ -18,6 +18,7 @@ std::string Player::getName(){
   return name;
 }
 
+//sets the player's score to a specified number
 void Player::setScore(int i) {
   score=i;
 }
@@ -32,18 +33,23 @@ void Player::subtractPoints(int i) {
   score-=i;
 }
 
+//returns the player's hand
 LinkedList* Player::getHand() {
   return hand;
 }
 
+//returns the size of the player's hand
 int Player::getHandSize() {
   return hand->size();
 }
 
-void Player::removeTile(Tile i) {
+//removes a specified tile from the player's hand
+bool Player::removeTile(Tile* i) {
+  bool deleted = false;
   if(hand->size()!=0) {
     if(hand->contains( i)){
       hand->deleteData(i);
+      deleted=true;
     }
     else {
       std::cout << "Error: Hand does not contain tile" << std::endl;
@@ -52,10 +58,12 @@ void Player::removeTile(Tile i) {
   else {
     std::cout << "Error: Hand is empty" << std::endl;
   }
+  return deleted;
 }
 
+//draws tiles from the bag until the player's hand is full
 void Player::drawTile(Bag* bag) {
-  while (hand->size()<5 && bag->size()>0) {
+  while (hand->size()<6 && bag->size()>0) {
     hand->addBack(bag->takeTile());
   }
 }

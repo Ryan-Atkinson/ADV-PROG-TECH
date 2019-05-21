@@ -1,10 +1,11 @@
 #ifndef ASSIGN2_PLAYER_H
 #define ASSIGN2_PLAYER_H
 
-
+// #include "Bag.h"
 #include "Tile.h"
 #include "LinkedList.h"
 #include <string>
+
 
 
 class Player {
@@ -43,14 +44,17 @@ class Player {
     void drawTile(Bag* bag);
 
     // removes a tile for the hand by index of the tile in the linked list
-    void removeTile(Tile i);
+    void removeTile(Tile* i);
 
     // returns boolean
-    bool hasTile(Tile i);
+    bool hasTile(Tile* i);
 
     //this is used when loading a file to set the hand
     void setHand(LinkedList* list);
 
-}
+};
+
+
+
 
 #endif // ASSIGN2_PLAYER_H
