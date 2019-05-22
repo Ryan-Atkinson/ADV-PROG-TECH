@@ -6,7 +6,6 @@ Menu
 2. Load Game
 3. Show student information
 4. Quit
-
 >
 A, it’s your turn
 Score for A: 6
@@ -15,10 +14,9 @@ Score for B: 6
 -------------------
 A | | | | | | |
 B | | |B4|B6|B5| |
-C | | |R4| | | |
+C | | |R4| |G5| |
 D | |Y1|Y4|Y2| | |
 E | | |P4| | | |
-F | | | | | | |
+F | | |P4 | | | |
 Your hand is
 Y5,G5,R5,O2,B1,P6
-Invalid Input: Can't place tile there
