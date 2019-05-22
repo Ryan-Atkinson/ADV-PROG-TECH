@@ -188,7 +188,12 @@ void startGame(Game* game){
           } else if (counter ==3){
             int row=word[0]-65;
             std::cout<<"Line 189: row: "<<row<<std::endl;
-            int col =word[1]-'0';
+
+             std::stringstream intCol(word.substr(1,2));
+
+             int col = 0;
+             intCol >> col;
+
             std::cout<<"Line 191: col: "<<col<<std::endl;
             bool isValid=game->addTileToBoard(tile, row, col);
             if(isValid){
