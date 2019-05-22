@@ -51,7 +51,7 @@ bool Player::removeTile(Tile* i) {
   //only deletes if the hand size is greater than zero
   if(hand->size()!=0) {
     // can only delete data that is in the bag
-    if(hand->contains( i)){
+    if(hand->contains(i)){
       hand->deleteData(i);
       deleted=true;
     }
@@ -72,7 +72,7 @@ void Player::drawTile(Bag* bag) {
   }
 }
 
-bool Player::hasTile(Tile i) {
+bool Player::hasTile(Tile* i) {
   return hand->contains(i);
 }
 

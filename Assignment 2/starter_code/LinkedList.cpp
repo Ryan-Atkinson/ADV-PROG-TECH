@@ -236,10 +236,3 @@ void LinkedList::clear()
   //after deleting the node the head will need to point to nullptr
   head = nullptr;
 }
-
-void LinkedList::print(Node *head) {
-  while(head !=nullptr) {
-    std::cout << head->tile << ",";
-    head = head->next;
-  }
-}
