@@ -84,6 +84,7 @@ void startGame(Game* game){
   while(playingGame){
 
     Player* currentPlayer =game->getCurrentPlayer();
+
     std::cout<<std::endl;
 
     //prints out info the player
@@ -93,7 +94,7 @@ void startGame(Game* game){
 
     //prints scores
     std::cout<<"Score for "<<currentPlayer->getName()<<": "<<currentPlayer->getScore()<<std::endl;
-    std::cout<<"Score for "<<game->getOtherPlayer()<<": "<<game->getOtherPlayer()->getScore()<<std::endl;
+    std::cout<<"Score for "<<game->getOtherPlayer()->getName()<<": "<<game->getOtherPlayer()->getScore()<<std::endl;
     std::cout<<std::endl;
 
     //prints board
@@ -131,6 +132,7 @@ void startGame(Game* game){
       int foundInput=false;
       int inputType=0;
       int counter=1;
+
       while( userInput.good() || !foundInput){
         std::cin >> input;
         std::stringstream userInput(input);
@@ -139,7 +141,7 @@ void startGame(Game* game){
         std::string word="";
 
         std::getline( userInput, word );
-        std::cout<<"Line 163: Word: "<< word<<std::endl;
+
 
         // replaces a tile in the playres hand
         if(type.compare("replace")==0|| inputType==USER_REPLACE){
@@ -163,21 +165,21 @@ void startGame(Game* game){
 
           // places a tile on the board
         } else if (type.compare("place")==0 || inputType== USER_PLACE){
-          std::cout<<"Line 167: Compare: "<< word.compare("place")<<std::endl;
+          
 
           inputType=USER_PLACE;
 
           // gets the tile from the second word
           if(counter==1){
             tile=word;
-            std::cout<<"Line 173: Tile: "<<tile<<std::endl;
+
 
           // gets the row and column of th eboard from the 4th word
           } else if (counter ==3){
 
             //coverts the row char to int row, ie. 'A' to 0 etc.
             int row=word[0]-65;
-            std::cout<<"Line 189: row: "<<row<<std::endl;
+
 
             //converts the string of the column to an int
             //since a column can be two digits long, can't convert just the char
@@ -187,7 +189,7 @@ void startGame(Game* game){
              int col = 0;
              intCol >> col;
 
-            std::cout<<"Line 191: col: "<<col<<std::endl;
+
 
             //tries to add the tile onto the board
             bool isValid=game->addTileToBoard(tile, row, col);
@@ -198,18 +200,18 @@ void startGame(Game* game){
           }
 
           //saves the file of the current game state
-        } else if (type.compare("save") || inputType==USER_SAVE) {
+        } else if (type.compare("save")==0 || inputType==USER_SAVE) {
           //TODO
           inputType=USER_SAVE;
           if(counter==1){
 
           }
+          foundInput=true;
 
+        } else {
+          std::cout<<"Input is Invalid, try place or replace a tile"<<std::endl;
           foundInput=true;
-        }
-        else {
-          std::cout<<"Input is Invalid, try place or replace at tile"<<std::endl;
-          foundInput=true;
+          std::cin.clear();
         }
         //moves on to the next word
         counter++;
@@ -228,6 +230,144 @@ void startGame(Game* game){
   std::cout<<"Game has ended"<<std::endl;
 
 }
+
+// // starts a game
+// void startGame(Game* game){
+//   bool playingGame=true;
+//
+//   while(playingGame){
+//
+//     Player* currentPlayer =game->getCurrentPlayer();
+//     std::cout<<std::endl;
+//
+//     //prints out info the player
+//
+//     // prints name
+//     std::cout<<currentPlayer->getName()<<" , it's your turn"<<std::endl;
+//
+//     //prints scores
+//     std::cout<<"Score for "<<currentPlayer->getName()<<": "<<currentPlayer->getScore()<<std::endl;
+//     std::cout<<"Score for "<<game->getOtherPlayer()->getName()<<": "<<game->getOtherPlayer()->getScore()<<std::endl;
+//     std::cout<<std::endl;
+//
+//     //prints board
+//     game->getBoard()->printBoard();
+//
+//     //prints hand
+//     std::cout<<"Your hand is"<<std::endl;
+//
+//     int index=0;
+//     while(index<currentPlayer->getHand()->size()){
+//       Tile* tile = currentPlayer->getHand()->get(index);
+//       std::cout <<tile->colour<< tile->shape<<",";
+//       index++;
+//     }
+//     std::cout<<std::endl;
+//     std::cout<<std::endl;
+//
+//     //deals with user input
+//     bool hasValidInput=false;
+//     std::string input="";
+//
+//     // keeps asking user for input until it has valid input
+//     while(!hasValidInput){
+//       std::cout<<"> ";
+//       std::cin.ignore();
+//       std::cin.getLine(input)
+//       if(std::cin.eof()){
+//         std::cout<<"Goodbye"<<"\n";
+//         exit(0);
+//       }
+//     //  std::string type="";
+//       std::string tile="";
+//       //std::stringstream userInput(input);
+//       //std::getline( userInput, type );
+//
+//
+//       //int inputType=0;
+//
+//       // while( userInput.good() || !foundInput){
+//       //   std::cin >> input;
+//       //   std::stringstream userInput(input);
+//
+//
+//       //  std::string word="";
+//
+//         //std::getline( userInput, word );
+//         std::cout<<"Line 163: Word: "<< input<<std::endl;
+//         //replace A5
+//         // replaces a tile in the playres hand
+//         if(input.length()==11|| (input.substr(0,6)).compare("replace")==0){
+//
+//           // tries to replace the tile in the player's hand
+//           bool replaced= game->replaceTile(input.substr(8,9));
+//
+//           //if the tile is replaced
+//           if(replaced){
+//             hasValidInput =replaced;
+//           } else{
+//             std::cout<<"Tile couldn't be replaced"<<std::endl;
+//           }
+//
+//
+//
+//           //place R5 to A10
+//           // places a tile on the board
+//         } else if (input.length()>13 || (input.substr(0,4)).compare("place")==0){
+//           std::cout<<"Line 167: Compare: "<< (input.substr(0,4)).compare("place")<<std::endl;
+//
+//           // gets the tile from the second word
+//
+//           tile=input.substr(6,7);
+//           std::cout<<"Line 173: Tile: "<<tile<<std::endl;
+//
+//           //coverts the row char to int row, ie. 'A' to 0 etc.
+//           int row=input[12]-65;
+//           std::cout<<"Line 189: row: "<<row<<std::endl;
+//
+//           //converts the string of the column to an int
+//           //since a column can be two digits long, can't convert just the char
+//           //like above in the row , ie. "12" to 12
+//           int col=0;
+//           if(input.length()==15){
+//             col= input[14];
+//           } else if( input.length()==16){
+//             std::stringstream intCol(input.substr(14,15));
+//
+//
+//             intCol >> col;
+//           }
+//
+//
+//           std::cout<<"Line 191: col: "<<col<<std::endl;
+//
+//           //tries to add the tile onto the board
+//           bool isValid=game->addTileToBoard(tile, row, col);
+//           if(isValid){
+//             hasValidInput=true;
+//           }
+//
+//           //saves the file of the current game state
+//         } else if (input.substr(0,3).compare("save")) {
+//           //TODO
+//
+//           hasValidInput=true;
+//         }
+//         else {
+//           std::cout<<"Input is Invalid, try place or replace at tile"<<std::endl;
+//
+//         }
+//   }
+//   // checks if the game has ended
+//   playingGame = !game->hasGameEnded();
+//
+//   //changes who the current player is
+//   game->changeCurrentPlayer();
+//
+//
+// }
+// std::cout<<"Game has ended"<<std::endl;
+// }
 
 
 
@@ -361,36 +501,36 @@ void loadGame(){
          //reading in the player 1 name
           if(item==1){
             playerName=line;
-           std::cout<<"Read Player Name 1: "<<line<<std::endl;
+          //std::cout<<"Read Player Name 1: "<<line<<std::endl;
             //reading in the player 1 score
           } else if (item==2){
             playerScore=line;
-           std::cout<<"Read Score : "<<line<<std::endl;
+          // std::cout<<"Read Score : "<<line<<std::endl;
             //reading in the player 1 hand
           } else if(item==3){
             playerHand=line;
             player1= loadPlayer(playerName, playerScore, playerHand);
-            player1->getScore();
+
 
             //reading in the player 2 name
           } else if (item ==4){
             playerName=line;
-           std::cout<<"Read Player Name 2: "<<line<<std::endl;
+        //   std::cout<<"Read Player Name 2: "<<line<<std::endl;
 
             // reading player 2 score
           } else if (item== 5){
             playerScore=line;
-           std::cout<<"Read Score : "<<line<<std::endl;
+        //   std::cout<<"Read Score : "<<line<<std::endl;
             // reading player 2 hand
           } else if (item==6){
             playerHand=line;
             player2= loadPlayer(playerName, playerScore, playerHand);
-            player2->getScore();
+
             //reading in the board
           } else if (item==7){
-           std::cout<<"line 227:"<< line<<std::endl;
+            //std::cout<<"line 227:"<< line<<std::endl;
             std::getline(inFile, line);
-           std::cout<<"line 229: "<<line<<std::endl;
+           //std::cout<<"line 229: "<<line<<std::endl;
             std::getline(inFile, line);
 
             int col=0;
@@ -400,7 +540,7 @@ void loadGame(){
 
             while(line[1]==' ' && !inFile.eof()){
               boardVector.push_back(std::vector<std::string>());
-             std::cout<<"lin 237: " <<line<<std::endl;
+            // std::cout<<"lin 237: " <<line<<std::endl;
 
               if(line[1]==' '){
                 col=0;
@@ -413,18 +553,18 @@ void loadGame(){
                   std::string tile="";
                   getline( boardRow, tile, '|' );
                   if(col !=0){
-                   std::cout<<"line 252: "<<tile<<std::endl;
+              //     std::cout<<"line 252: "<<tile<<std::endl;
                     boardVector[row].push_back( tile );
                   }
 
 
-                  std::cout<<"line 254:" <<"Tile: "<< tile<<std::endl;
+              //    std::cout<<"line 254:" <<"Tile: "<< tile<<std::endl;
 
-                 std::cout<< "line 256:"<<"Col "<< col<<std::endl;
+                // std::cout<< "line 256:"<<"Col "<< col<<std::endl;
                   col++;
                 }
                 std::getline(inFile, line);
-                std::cout<<"line 260: "<<line<<std::endl;
+              //  std::cout<<"line 260: "<<line<<std::endl;
                 row++;
 
               }
@@ -442,7 +582,7 @@ void loadGame(){
               for(int j=0; j<col; j++){
                 std::string tile=boardVector[i][j];
                 if(tile[0]=='R' || tile[0]=='O' || tile[0]=='Y' || tile[0]=='G' || tile[0]=='B' || tile[0]=='P'){
-                 std::cout<<"Line: 275: "<<"colour: "<< tile[0]<< ", shape: "<< tile[1]<<std::endl;
+              //   std::cout<<"Line: 275: "<<"colour: "<< tile[0]<< ", shape: "<< tile[1]<<std::endl;
                   Colour colour=tile[0];
                   Shape shape =tile[1] -'0';
                   board[i][j]= new Tile(colour, shape);
@@ -451,8 +591,8 @@ void loadGame(){
             }
             tileBoard = new Board(row, col);
             tileBoard->setBoard(board);
-           std::cout<<"line 287: print board"<< std::endl;
-            tileBoard->printBoard();
+          // std::cout<<"line 287: print board"<< std::endl;
+          //  tileBoard->printBoard();
 
 
 
@@ -500,7 +640,7 @@ void loadGame(){
        }
        startLoadedGame(player1, player2, newBag, tileBoard, currentPlayer );
     } else{
-      std::cout<<"Invalid File"<<std::endl;
+      //std::cout<<"Invalid File"<<std::endl;
 
       showMenu();
       menuOption();
