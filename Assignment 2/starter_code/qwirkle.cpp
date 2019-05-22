@@ -165,7 +165,7 @@ void startGame(Game* game){
 
           // places a tile on the board
         } else if (type.compare("place")==0 || inputType== USER_PLACE){
-          
+
 
           inputType=USER_PLACE;
 
@@ -640,7 +640,7 @@ void loadGame(){
        }
        startLoadedGame(player1, player2, newBag, tileBoard, currentPlayer );
     } else{
-      //std::cout<<"Invalid File"<<std::endl;
+      std::cout<<"Invalid File"<<std::endl;
 
       showMenu();
       menuOption();
