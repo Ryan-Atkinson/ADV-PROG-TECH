@@ -3,7 +3,7 @@
 #include <iostream>
 
 LinkedList::LinkedList() {
-   head = nullptr;
+   this->head = nullptr;
 
 
    // TODO
@@ -64,6 +64,7 @@ bool LinkedList::contains(Tile* data){
       if(current->tile->colour==data->colour && current->tile->shape==data->shape){
         containsTile=true;
       }
+      current=current->next;
     }
   }
   return containsTile;
@@ -201,7 +202,7 @@ int LinkedList::size()
   //assign counter to 0
   int counter =0;
   //create node and point to the head which points to nullptr
-  if(head!=nullptr){
+  if(this->head!=nullptr){
     Node* node = head;
     //a while loop to check if note is not equal to nullptr
     while(node!=nullptr)

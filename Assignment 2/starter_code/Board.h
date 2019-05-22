@@ -2,6 +2,7 @@
 #define ASSIGN2_BOARD_H
 
 #include "Tile.h"
+#include <string>
 
 
 class Board {
