@@ -47,7 +47,10 @@ int Player::getHandSize() {
 //removes a specified tile from the player's hand
 bool Player::removeTile(Tile* i) {
   bool deleted = false;
+
+  //only deletes if the hand size is greater than zero
   if(hand->size()!=0) {
+    // can only delete data that is in the bag
     if(hand->contains( i)){
       hand->deleteData(i);
       deleted=true;
@@ -74,6 +77,7 @@ bool Player::hasTile(Tile* t) {
   return hand->contains(t);
 }
 
+//sets tha player's hand used for loading in files
 void Player::setHand(LinkedList* list){
   this->hand=list;
 }

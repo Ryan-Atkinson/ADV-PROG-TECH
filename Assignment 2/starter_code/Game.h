@@ -3,7 +3,7 @@
 
 #include "Tile.h"
 #include "LinkedList.h"
-//#include "Bag.h"
+#include "Bag.h"
 #include "Board.h"
 #include "Player.h"
 #include <string>
@@ -30,14 +30,29 @@ public:
   Player* getPlayer1();
   Player* getPlayer2();
   Bag* getTileBag();
+
+  // replaces Tile in players hand
   bool replaceTile(std::string tile);
+
+  //adds tile to board and then adds score to the current player
   bool addTileToBoard(std::string tile, int tileRow, int tileCol);
+
+  //decides if the game has ended or not
   bool hasGameEnded();
+
+  // changes who the current player is
   void changeCurrentPlayer();
+
+  // finds the score from the current player, depending on the move
   int findScore(int numNorth, int numSouth, int numEast, int numWest);
-  void hangeCurrentPlayer();
+
+  //gets a point to the current player
   Player* getCurrentPlayer();
+
+  //counts the number of tiles in a given direction
   int numOfTiles(int tileRow, int tileCol, int direction);
+
+  //gets the player which isn't the current player
   Player* getOtherPlayer();
 
 

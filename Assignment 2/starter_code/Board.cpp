@@ -3,21 +3,11 @@
 #include <string>
 
 Board::Board(int row, int col) : row(row), col(col) {
-
+  // inistalises the 2d array of pointers to tiles
   this->board= new Tile**[this->row];
   for(int i = 0; i < this->row; i++){
     this->board[i] = new Tile*[this->col];
   }
-
-
-
-
-
-  // for (int row = 0; row < 6; row++) {
-  //   for (int col = 0; col < 6; col++) {
-  //     array[row][col] = '  ';
-  //   }
-  // }
 
 }
 
@@ -43,19 +33,22 @@ void Board::printBoard(){
   }
   std::cout<<std::endl;
 
-  //prints the dashs
-  std::cout<<"  ";
 
+  std::cout<<"  ";
+//prints the dashs
   for(int i =0; i<col;i++){
     std::cout<<"---";
   }
   std::cout<<"-";
   std::cout<<std::endl;
 
-
+  // prints out the board
   for(int i =0; i<row; i++){
+    // the char associated with each row
     std::cout<<(char)('A'+i)<<" ";
     std::cout<<"|";
+
+    //prints out each column in the board
     for(int j=0; j<col;j++){
 
       // if no tile exists in this positon on the board
@@ -94,6 +87,7 @@ bool Board::add(int row, int column, Tile* piece) {
   return true;
 }
 
+// sets the board, used for laoding in files
 void Board::setBoard(Tile*** board){
   this->board=board;
 }
